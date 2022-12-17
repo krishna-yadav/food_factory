@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% block head %} 
+
+     
+           
+        <div class="container-fluid px-1 py-40 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-9 text-center">
+                <!-- <div class="col-xl-5 col-lg-6 col-md-7 col-9 text-center"> -->
+                    <!-- <h3>Domino's Venture</h3> -->
+                    
+                    <div class="card">
+                        <h5 class="text-center mb-4">Driver Tracking</h5>
+                        <form class="form-card"  action = "/shipment" method = "POST">
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Shipment number<span class="text-danger"> *</span></label> <input type="text" id="Shipment_No" name="Shipment_No" placeholder="" onblur="validate(1)"> </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class=" form-control-label px-3">Vehicle Number<span class="text-danger"> *</span></label> <input type="text" id="Vehicle_No" name="Vehicle_No" placeholder="" onblur="validate(2)"> </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Shipment type<span class="text-danger"> *</span></label> 
+                                    <label class="form-control-label px-3"><input type="radio" name="Shipment_Type">   Local</label>
+                                    <label class="form-control-label px-3"><input type="radio" id="Shipment_Type" name="Shipment_Type" placeholder="" onblur="validate(3)"> Outstation</label> 
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Pilot_unique_ID" name="Pilot_unique_ID" placeholder="" onblur="validate(4)"> </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3    ">Co-Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Copilot_unique_ID" name="Copilot_unique_ID" placeholder="" onblur="validate(5)"> </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Dispatcher Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Dispatcher_unique_ID" name="Dispatcher_unique_ID" placeholder="" onblur="validate(6)"> </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex " id="Transporter"  name="Transporter" placeholder="Transporter" onblur="validate(7)" style="padding-top: 10px; align-self: stretch;">   
+                                        <option value=""> </option>
+                                        <option value=" ">  DHL</option>
+                                        <option value=" ">  RAPID</option>
+                                        <option value=" ">  RELICORP</option>
+                                        <option value=" ">  Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Add Time<span class="text-danger"> *</span></label> <input type="text" id="ans" name="Add_Time" placeholder="" onblur="validate(6)"> </div>
+                            </div> -->
+                            <div class="row justify-content-center">
+                                <div class="form-group col-sm-6"> <button type="submit" class="w-100 btn btn-lg btn-primary">Submit</button> 
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+{% endblock %}
