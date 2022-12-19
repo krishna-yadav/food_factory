@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block head %} 
+
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Employee <b>Details</b></h2></div>
+                    <div class="col-sm-4">
+                        <!-- <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button> -->
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Shipment_No</th>
+                        <th>Vehicle_No</th>
+                        <th>Shipment_Type</th>
+                        <th>Pilot_unique_ID</th>
+                        <th>Copilot_unique_ID</th>
+                        <th>Dispatcher_unique_ID</th>
+                        <th>Transporter</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in shipment %}
+                    <tr>
+                        <td>{{row.Shipment_No}}</td>
+                        <td>{{row.Vehicle_No}}</td>
+                        <td>{{row.Shipment_Type}}</td>
+                        <td>{{row.Pilot_unique_ID}}</td>
+                        <td>{{row.Copilot_unique_ID}}</td>
+                        <td>{{row.Dispatcher_unique_ID}}</td>
+                        <td>{{row.Transporter}}</td>
+                        <td>
+                            
+                            <a  class="edit" title="Edit" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons"> &#xE254;</i></a>
+                            <a class="add" title="Add" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons">&#xE03B;</i></a>
+                            <!-- <a class="delete" title="Delete" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons">&#xE872;</i></a> -->
+                        </td>
+                    </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>     
+            <!-- <div class="table"></div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="table"></div><br> -->
+
+
+{% endblock %}

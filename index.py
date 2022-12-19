@@ -13,6 +13,23 @@ def index():
 
 
 
+# login page
+@app.route("/login", methods = ['GET','POST'])
+def login():
+	# if ('user' in session and session['user'] == 'admin'):
+	# 	return render_template("dashboard.html")
+
+	# if request.method == 'POST':
+	# 	username = request.form['user']
+	# 	password = request.form['pass']
+	# 	if (username == 'admin' and password == 'admin'):
+	# 		session['user'] = username
+	# 		return render_template("dashboard.html")
+
+	return render_template("login.html")
+
+
+
 # shipment form
 @app.route("/shipment", methods = ['GET','POST'])
 def shipment():
@@ -120,5 +137,29 @@ def driver():
 
 	# 	return 'POST'
 	return render_template("driver.html")
+
+
+
+
+# shipment list
+@app.route("/ship_list", methods= ["GET","POST"])
+def ship_list():
+	# if request.method == 'GET':
+	# 	ships = shipment.query.all()
+	# 	print(ships)
+	# 	return render_template("ship_list.html", shipment=ships)
+	return render_template("ship_list.html")	
+
+
+
+# driver list
+@app.route("/driver_list", methods= ["GET","POST"])
+def driver_list():
+	# if request.method == 'GET':
+	# 	emp = employee.query.all()
+	# 	print(emp)
+	# 	return render_template("driver_list.html", employee=emp)
+	return render_template("driver_list.html")	
+
 
 app.run(debug=True)
