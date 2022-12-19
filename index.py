@@ -12,6 +12,11 @@ def index():
 	return render_template("index.html")	
 
 
+@app.route("/dashboard")
+def dashboard():
+	print("hii")
+	return render_template("dashboard.html")
+	
 
 # login page
 @app.route("/login", methods = ['GET','POST'])
