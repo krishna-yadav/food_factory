@@ -28,18 +28,6 @@ function valid(val) {
  
  
 
-
- // v18 = document.getElementById("Driving_License_Number");
- //    v19 = document.getElementById("Driving_License_Type");
- //    v20 = document.getElementById("Drive_License_Validity");
- //    v21 = document.getElementById("Vaccination_Name");
- //    v22 = document.getElementById("Aadhar_Number");
- //    v23 = document.getElementById("Aadhar_Attachment");
- //    v24 = document.getElementById("Driver_Lic_Attachment");
- //    v25 = document.getElementById("Vaccination_Certi_Attachment");
- //    v26 = document.getElementById("Photo_Attachment");
- 
-
     flag1 = true;
     flag2 = true;
     flag3 = true;

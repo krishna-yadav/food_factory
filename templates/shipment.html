@@ -13,30 +13,30 @@
                         <h5 class="text-center mb-4">Driver Tracking</h5>
                         <form class="form-card"  action = "/shipment" method = "POST">
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Shipment number<span class="text-danger"> *</span></label> <input type="text" id="Shipment_No" name="Shipment_No" placeholder="" onblur="validate(1)"> </div>
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Shipment number<span class="text-danger"> *</span></label> <input type="text" id="Shipment_No" name="Shipment_No" placeholder="" onblur="validate(1)" required> </div>
                             </div>
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-sm-8 flex-column d-flex"> <label class=" form-control-label px-3">Vehicle Number<span class="text-danger"> *</span></label> <input type="text" id="Vehicle_No" name="Vehicle_No" placeholder="" onblur="validate(2)"> </div>
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class=" form-control-label px-3">Vehicle Number<span class="text-danger"> *</span></label> <input type="text" id="Vehicle_No" name="Vehicle_No" placeholder="" onblur="validate(2)" required> </div>
                             </div>
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex"> 
                                     <label class="form-control-label px-3">Shipment type<span class="text-danger"> *</span></label> 
                                     <label class="form-control-label px-3"><input type="radio" name="Shipment_Type">   Local</label>
-                                    <label class="form-control-label px-3"><input type="radio" id="Shipment_Type" name="Shipment_Type" placeholder="" onblur="validate(3)"> Outstation</label> 
+                                    <label class="form-control-label px-3"><input type="radio" id="Shipment_Type" name="Shipment_Type" placeholder="" onblur="validate(3)" required> Outstation</label> 
                                 </div>
                             </div>
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Pilot_unique_ID" name="Pilot_unique_ID" placeholder="" onblur="validate(4)"> </div>
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Pilot_unique_ID" name="Pilot_unique_ID" placeholder="" onblur="validate(4)" required> </div>
                             </div>
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3    ">Co-Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Copilot_unique_ID" name="Copilot_unique_ID" placeholder="" onblur="validate(5)"> </div>
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3    ">Co-Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Copilot_unique_ID" name="Copilot_unique_ID" placeholder="" onblur="validate(5)" required> </div>
                             </div>
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Dispatcher Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Dispatcher_unique_ID" name="Dispatcher_unique_ID" placeholder="" onblur="validate(6)"> </div>
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Dispatcher Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Dispatcher_unique_ID" name="Dispatcher_unique_ID" placeholder="" onblur="validate(6)" required> </div>
                             </div>
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex " id="Transporter"  name="Transporter" placeholder="Transporter" onblur="validate(7)" style="padding-top: 10px; align-self: stretch;">   
+                                    <select class="form-group col-sm-8 flex-column d-flex " id="Transporter"  name="Transporter" placeholder="Transporter" onblur="validate(7)" style="padding-top: 10px; align-self: stretch;" required>   
                                         <option value=""> </option>
                                         <option value=" ">  DHL</option>
                                         <option value=" ">  RAPID</option>

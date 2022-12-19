@@ -22,19 +22,19 @@ $(document).ready(function () {
                         <h5 class="text-center mb-4">Driver's Details</h5>
                         <form class="form-card"  action = "/driver" method = "POST">
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">First name<span class="text-danger"> *</span></label> <input type="text" id="First_Name" name="First_Name" placeholder="" onblur="valid(1)"> </div>
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">First name<span class="text-danger"> *</span></label> <input type="text" id="First_Name" name="First_Name" placeholder="" onblur="valid(1)" required> </div>
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Middle <noframes></noframes></label> <input type="text" id="Middle_Name" name="Middle_Name" placeholder="" > </div>
-                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Last name<span class="text-danger"> *</span></label> <input type="text" id="Last_Name" name="Last_Name" placeholder="" onblur="valid(2)"> </div>
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Last name<span class="text-danger"> *</span></label> <input type="text" id="Last_Name" name="Last_Name" placeholder="" onblur="valid(2)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class=" form-control-label px-3">Date of Onboarding<span class="text-danger"> *</span></label> <input type="date" id="Date_of_Onboard" name="Date_of_Onboard" placeholder="" onblur="valid(3)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class=" form-control-label px-3">Date of Onboarding<span class="text-danger"> *</span></label> <input type="date" id="Date_of_Onboard" name="Date_of_Onboard" placeholder="" onblur="valid(3)" required> </div>
                             </div>
                             <!-- <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> <input type="text" id="Transporter" name="Transporter" placeholder="" onblur="valid(4)"> </div>
                             </div> -->
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Transporter" name="Transporter" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10px">   
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Transporter" name="Transporter" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10px" required>   
                                         <option value=""> </option>
                                         <option value=" ">  DHL</option>
                                         <option value=" ">  RAPID</option>
@@ -43,59 +43,52 @@ $(document).ready(function () {
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="row justify-content-between text-left">
+                            <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex"> 
                                     <label class="form-control-label px-3">Role <span class="text-danger"> *</span></label> 
-                                    <label class="form-control-label px-3"><input type="radio" id="r1" name="r1" placeholder="" onblur="valid(5)" value="Driver">   Driver</label>
-                                    <label class="form-control-label px-3"><input type="radio" id="r2" name="r2" placeholder="" onblur="valid(5)" value="Dispatcher">    Dispatcher</label> 
-                                </div>
-                            </div> -->
-                            <div class="row justify-content-center text-left">
-                                <div class="form-group col-sm-8 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Role<span class="text-danger"> *</span></label> 
-                                    <label class="form-control-label px-3"><input type="radio" name="Role">   Driver</label>
-                                    <label class="form-control-label px-3"><input type="radio" id="Role" name="Role" placeholder="" onblur="validate(5)"> Dispatcher</label> 
+                                    <label class="form-control-label px-3"><input type="radio" id="Role" name="Role" placeholder="" onblur="valid(5)" value="Driver" required>   Driver</label>
+                                    <label class="form-control-label px-3"><input type="radio" id="Role" name="Role" placeholder="" onblur="valid(5)" value="Dispatcher" required>    Dispatcher</label> 
                                 </div>
                             </div>
                             
 
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_1 <span class="text-danger"> *</span></label> <input type="text" id="Address_1" name="Address_1" placeholder="" onblur="valid(6)"> </div>
+                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_1 <span class="text-danger"> *</span></label> <input type="text" id="Address_1" name="Address_1" placeholder="" onblur="valid(6)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_2<span class="text-danger"> *</span></label> <input type="text" id="Address_2" name="Address_2" placeholder="" onblur="valid(7)"> </div>
+                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_2<span class="text-danger"> *</span></label> <input type="text" id="Address_2" name="Address_2" placeholder="" onblur="valid(7)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">City<span class="text-danger"> *</span></label> <input type="text" id="City" name="City" placeholder="" onblur="valid(8)"> </div>
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">State/Region/Province<span class="text-danger"> *</span></label> <input type="text" id="State" name="State" placeholder="" onblur="valid(9)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">City<span class="text-danger"> *</span></label> <input type="text" id="City" name="City" placeholder="" onblur="valid(8)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">State/Region/Province<span class="text-danger"> *</span></label> <input type="text" id="State" name="State" placeholder="" onblur="valid(9)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Postal / Zip Code<span class="text-danger"> *</span></label> <input type="text" id="Zip_Code" name="Zip_Code" placeholder="" onblur="valid(10)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Postal / Zip Code<span class="text-danger"> *</span></label> <input type="text" id="Zip_Code" name="Zip_Code" placeholder="" onblur="valid(10)" required> </div>
                                 
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Phone <span class="text-danger"> *</span></label> <input type="text" id="Mobile_No" name="Mobile_No" placeholder="" onblur="valid(11)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Phone <span class="text-danger"> *</span></label> <input type="text" id="Mobile_No" name="Mobile_No" placeholder="" onblur="valid(11)" required> </div>
                             
                             </div>
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Date of Birth<span class="text-danger"> *</span></label> <input type="date" id="DOB" name="DOB" placeholder="" onblur="valid(12)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Date of Birth<span class="text-danger"> *</span></label> <input type="date" id="DOB" name="DOB" placeholder="" onblur="valid(12)" required> </div>
                             
                             </div>
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Emergency Contact Person <span class="text-danger"> *</span></label> <input type="text" id="Emergency_Contact_Person" name="Emergency_Contact_Person" placeholder="" onblur="valid(13)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Emergency Contact Person <span class="text-danger"> *</span></label> <input type="text" id="Emergency_Contact_Person" name="Emergency_Contact_Person" placeholder="" onblur="valid(13)" required> </div>
                                 
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Emergency Contact Number <span class="text-danger"> *</span></label> <input type="text" id="Emergency_Contact_No" name="Emergency_Contact_No" placeholder="" onblur="valid(14)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Emergency Contact Number <span class="text-danger"> *</span></label> <input type="text" id="Emergency_Contact_No" name="Emergency_Contact_No" placeholder="" onblur="valid(14)" required> </div>
                                 
                             </div>
                             
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Blood Group<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Blood_Group" name="Blood_Group" placeholder="Blood Group " onblur="valid(15)" style="padding-top: 10px">   
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Blood_Group" name="Blood_Group" placeholder="Blood Group " onblur="valid(15)" style="padding-top: 10px" required>   
                                         <option value=""> </option>
                                         <option value=" ">  A+</option>
                                         <option value=" ">  A-</option>
@@ -113,13 +106,13 @@ $(document).ready(function () {
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex"> 
                                     <label class="form-control-label px-3">Marital Status<span class="text-danger"> *</span></label> 
-                                    <label class="form-control-label px-3"><input type="radio" id = "Marital_Status" name="Marital_Status" placeholder="" onblur="valid(16)">   Married</label>
-                                    <label class="form-control-label px-3"><input type="radio" id="Marital_Status" name="Marital_Status" placeholder="" onblur="valid(16)">    Single</label> 
+                                    <label class="form-control-label px-3"><input type="radio" id = "Marital_Status" name="Marital_Status" placeholder="" onblur="valid(16)" required>   Married</label>
+                                    <label class="form-control-label px-3"><input type="radio" id="Marital_Status" name="Marital_Status" placeholder="" onblur="valid(16)" required>    Single</label> 
                                 </div>
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Educational Qualification<span class="text-danger"> *</span></label> 
-                                <select class="form-group col-sm-8 flex-column d-flex" id="Education_Qualification" name="Education_Qualification" placeholder="Blood Group " onblur="valid(17)" style="padding-top: 10px"> 
+                                <select class="form-group col-sm-8 flex-column d-flex" id="Education_Qualification" name="Education_Qualification" placeholder="Blood Group " onblur="valid(17)" style="padding-top: 10px" required> 
                                         <option value=""> </option>
                                         <option value=" ">uneducated</option>
                                         <option value=" ">1st-5th</option>
@@ -143,12 +136,12 @@ $(document).ready(function () {
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">AADHAR Number<span class="text-danger"> *</span></label> <input type="text" id="Aadhar_Number" name="Aadhar_Number" placeholder="" onblur="valid(18)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">AADHAR Number<span class="text-danger"> *</span></label> <input type="text" id="Aadhar_Number" name="Aadhar_Number" placeholder="" onblur="valid(18)" required> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">AADHAR CARD<span class="text-danger"> *</span></label> 
-                                    <input type="text" id="Aadhar_Attachment" name="Aadhar_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(19)">
+                                    <input type="text" id="Aadhar_Attachment" name="Aadhar_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(19)" required>
                                     <!-- <div class="custom-file">
   <input type="file" class="custom-file-input" id="customFile">
   <label class="custom-file-label" for="customFile">Choose file</label>
@@ -159,12 +152,12 @@ $(document).ready(function () {
                             </div>
                             <div class="text">
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Number<span class="text-danger"> *</span></label> <input type="text" id="Driving_License_Number" name="Driving_License_Number" placeholder="" onblur="valid(20)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Number<span class="text-danger"> *</span></label> <input type="text" id="Driving_License_Number" name="Driving_License_Number" placeholder="" onblur="valid(20)" required> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Category<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Driving_License_Type" name="Driving_License_Type" placeholder="Blood Group " onblur="valid(21)"> 
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Driving_License_Type" name="Driving_License_Type" placeholder="Blood Group " onblur="valid(21)" required> 
                                         <option value=""> </option>
                                         <option value=" ">HGMV</option>
                                         <option value=" ">HPMV</option>
@@ -174,11 +167,11 @@ $(document).ready(function () {
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Validity<span class="text-danger"> *</span></label> <input type="text" id="Drive_License_Validity" name="Drive_License_Validity" placeholder="" onblur="valid(22)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Validity<span class="text-danger"> *</span></label> <input type="text" id="Drive_License_Validity" name="Drive_License_Validity" placeholder="" onblur="valid(22)" required> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">DL Image<span class="text-danger"> *</span></label> <input type="file" id="Driver_Lic_Attachment" name="Driver_Lic_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(23)"> </div>
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">DL Image<span class="text-danger"> *</span></label> <input type="file" id="Driver_Lic_Attachment" name="Driver_Lic_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(23)" required> </div>
                             
                             </div>
                         </div>
@@ -186,7 +179,7 @@ $(document).ready(function () {
 
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Name of Vaccine <span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Vaccination_Name" name="Vaccination_Name" placeholder="Blood Group " onblur="valid(24)" style="padding-top: 10px"> 
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Vaccination_Name" name="Vaccination_Name" placeholder="Blood Group " onblur="valid(24)" style="padding-top: 10px" required> 
                                         <option value=""> </option>
                                         <option value=" ">Covaxin</option>
                                         <option value=" ">Covishield </option>
@@ -202,7 +195,7 @@ $(document).ready(function () {
                             
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Vaccination Certificate<span class="text-danger"> *</span></label> <input type="text" id="Vaccination_Certi_Attachment" name="Vaccination_Certi_Attachment" placeholder="" onblur="valid(25)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Vaccination Certificate<span class="text-danger"> *</span></label> <input type="text" id="Vaccination_Certi_Attachment" name="Vaccination_Certi_Attachment" placeholder="" onblur="valid(25)" required> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
@@ -210,7 +203,7 @@ $(document).ready(function () {
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Person Image <span class="text-danger"> *</span></label> <input type="text" id="Photo_Attachment" name="Photo_Attachment" placeholder="" onblur="valid(26)"> </div>
+                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Person Image <span class="text-danger"> *</span></label> <input type="text" id="Photo_Attachment" name="Photo_Attachment" placeholder="" onblur="valid(26)" required> </div>
                             </div>
                             
 
