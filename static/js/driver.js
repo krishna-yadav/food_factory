@@ -262,7 +262,8 @@ function valid(val) {
             flag19 = true;
         }
     }
-
+// DRIVER
+    
     if(val>=20 || val==0) {
         if(v20.value == "") {
             v20.style.borderColor = "red";

@@ -29,9 +29,6 @@ $(document).ready(function () {
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class=" form-control-label px-3">Date of Onboarding<span class="text-danger"> *</span></label> <input type="date" id="Date_of_Onboard" name="Date_of_Onboard" placeholder="" onblur="valid(3)" required> </div>
                             </div>
-                            <!-- <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> <input type="text" id="Transporter" name="Transporter" placeholder="" onblur="valid(4)"> </div>
-                            </div> -->
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
                                     <select class="form-group col-sm-8 flex-column d-flex" id="Transporter" name="Transporter" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10px" required>   
@@ -54,7 +51,7 @@ $(document).ready(function () {
 
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_1 <span class="text-danger"> *</span></label> <input type="text" id="Address_1" name="Address_1" placeholder="" onblur="valid(6)" required> </div>
+                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_1 <span class="text-danger"> *</span></label> <input type="text" id="Address_1" name="Address_1" placeholder="" onblur="valid(6)" required > </div>
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_2<span class="text-danger"> *</span></label> <input type="text" id="Address_2" name="Address_2" placeholder="" onblur="valid(7)" required> </div>
@@ -68,7 +65,7 @@ $(document).ready(function () {
                                 
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Phone <span class="text-danger"> *</span></label> <input type="text" id="Mobile_No" name="Mobile_No" placeholder="" onblur="valid(11)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Phone <span class="text-danger"> *</span></label> <input type="text" id="Mobile_No" name="Mobile_No" placeholder="" onblur="valid(11)" required minlength="10" maxlength="10"> </div>
                             
                             </div>
 
@@ -141,7 +138,7 @@ $(document).ready(function () {
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">AADHAR CARD<span class="text-danger"> *</span></label> 
-                                    <input type="text" id="Aadhar_Attachment" name="Aadhar_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(19)" required>
+                                    <input type="file" id="Aadhar_Attachment" name="Aadhar_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(19)" required>
                                     <!-- <div class="custom-file">
   <input type="file" class="custom-file-input" id="customFile">
   <label class="custom-file-label" for="customFile">Choose file</label>
@@ -150,14 +147,14 @@ $(document).ready(function () {
 
                             
                             </div>
-                            <div class="text">
+                        <div class="text">
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Number<span class="text-danger"> *</span></label> <input type="text" id="Driving_License_Number" name="Driving_License_Number" placeholder="" onblur="valid(20)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Number<span class="text-danger"> *</span></label> <input type="text" id="Driving_License_Number" name="Driving_License_Number" placeholder="" onblur="valid(20)"> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Category<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Driving_License_Type" name="Driving_License_Type" placeholder="Blood Group " onblur="valid(21)" required> 
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Driving_License_Type" name="Driving_License_Type" placeholder="Blood Group " onblur="valid(21)" > 
                                         <option value=""> </option>
                                         <option value=" ">HGMV</option>
                                         <option value=" ">HPMV</option>
@@ -167,11 +164,11 @@ $(document).ready(function () {
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Validity<span class="text-danger"> *</span></label> <input type="text" id="Drive_License_Validity" name="Drive_License_Validity" placeholder="" onblur="valid(22)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Validity<span class="text-danger"> *</span></label> <input type="text" id="Drive_License_Validity" name="Drive_License_Validity" placeholder="" onblur="valid(22)" > </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">DL Image<span class="text-danger"> *</span></label> <input type="file" id="Driver_Lic_Attachment" name="Driver_Lic_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(23)" required> </div>
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">DL Image<span class="text-danger"> *</span></label> <input type="file" id="Driver_Lic_Attachment" name="Driver_Lic_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(23)" > </div>
                             
                             </div>
                         </div>
