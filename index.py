@@ -1,6 +1,8 @@
 from flask import Flask, render_template , request , session 
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
+from werkzeug.utils import secure_filename
+from os.path import join, dirname, realpath
 
 
 app = Flask(__name__)
@@ -8,7 +10,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/zubilant'
 db = SQLAlchemy(app)
 app.secret_key = 'my-super-secret-key'
+app.config['UPLOAD_FOLDER'] = 'C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\Final\\food_factory\\static\\images'
 
+# app.config['UPLOAD_FOLDER'] = join(dirname(realpath(__file__)), 'static\\images')
 
 
 # # shipment list
@@ -122,9 +126,25 @@ def driver():
 		PANCard_Attachment = request.files['PANCard_Attachment']
 		Driver_Lic_Attachment = request.files['Driver_Lic_Attachment']
 		Vaccination_Certi_Attachment = request.files['Vaccination_Certi_Attachment']
-		Photo_Attachment = request.form['Photo_Attachment']
+		Photo_Attachment = request.files['Photo_Attachment']
 
-		
+		if Aadhar_Attachment :
+			Aadhar_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(Aadhar_Attachment.filename)))
+			Aadhar_Attachment = "yes"
+		if PANCard_Attachment :
+			PANCard_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(PANCard_Attachment.filename)))
+			PANCard_Attachment = "yes"
+		if Driver_Lic_Attachment :
+			Driver_Lic_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(Driver_Lic_Attachment.filename)))
+			Driver_Lic_Attachment = "yes"
+		if Vaccination_Certi_Attachment :
+			Vaccination_Certi_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(Vaccination_Certi_Attachment.filename)))
+			Vaccination_Certi_Attachment = "yes"
+		if Photo_Attachment :
+			Photo_Attachment.save(join(app.config['UPLOAD_FOLDER'] , secure_filename(Photo_Attachment.filename)))
+			Photo_Attachment = "yes"
+
+
 		S = First_Name[0:4]+"_"+Transporter[0:4]
 		entry = employee(
 			Unique_ID = S , 
