@@ -25,15 +25,52 @@
                                     <label class="form-control-label px-3"><input type="radio" id="Shipment_Type" name="Shipment_Type" placeholder="" onblur="validate(3)" required> Outstation</label> 
                                 </div>
                             </div>
-                            <div class="row justify-content-center text-left">
+                            <!-- <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Pilot_unique_ID" name="Pilot_unique_ID" placeholder="" onblur="validate(4)" required> </div>
+                            </div> -->
+
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Pilot Unique ID<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex " id="Pilot_unique_ID"  name="Pilot_unique_ID" placeholder="Pilot_unique_ID" onblur="validate(4)" style="padding-top: 10px; align-self: stretch;" required>
+                                        <option value=""> </option>
+                                        {% for row in Driver %}
+                                        <option value=" ">{{row.Unique_ID}}</option>
+                                       {% endfor %}
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Co-Pilot Unique ID<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex " id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;" required>
+                                        <option value=""> </option>
+                                        {% for row in Driver %}
+                                        <option value=" ">{{row.Unique_ID}}</option>
+                                       {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Dispatcher Unique ID<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex " id="Dispatcher_unique_ID"  name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;" required>
+                                        <option value=""> </option>
+                                        {% for row in Dispatcher %}
+                                        <option value=" ">{{row.Unique_ID}}</option>
+                                       {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+<!-- 
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3    ">Co-Pilot Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Copilot_unique_ID" name="Copilot_unique_ID" placeholder="" onblur="validate(5)" required> </div>
-                            </div>
-                            <div class="row justify-content-center text-left">
+                            </div> -->
+                            <!-- <div class="row justify-content-center text-left">
                                 <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Dispatcher Unique ID<span class="text-danger"> *</span></label> <input type="text" id="Dispatcher_unique_ID" name="Dispatcher_unique_ID" placeholder="" onblur="validate(6)" required> </div>
-                            </div>
+                            </div> -->
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
                                     <select class="form-group col-sm-8 flex-column d-flex " id="Transporter"  name="Transporter" placeholder="Transporter" onblur="validate(7)" style="padding-top: 10px; align-self: stretch;" required>   

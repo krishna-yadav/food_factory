@@ -12,8 +12,6 @@ db = SQLAlchemy(app)
 app.secret_key = 'my-super-secret-key'
 app.config['UPLOAD_FOLDER'] = 'C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\Final\\food_factory\\static\\images'
 
-# app.config['UPLOAD_FOLDER'] = join(dirname(realpath(__file__)), 'static\\images')
-
 
 # # shipment list
 # @app.route("/index", methods= ["GET","POST"])
@@ -48,6 +46,15 @@ def login():
 # shipment form
 @app.route("/shipment", methods = ['GET','POST'])
 def shipment():
+	Driver = employee.query.filter_by(Role='Driver')
+	Dispatcher = employee.query.filter_by(Role='Dispatcher')
+	print("Driver")
+	print(Driver)
+	# for i in driver:
+	# 	print(i)
+	# emp = employee.query.all()
+	# print("emp")
+	# print(emp)
 	if request.method == 'POST':
 		s= []
 		ShipmentNo = request.form['Shipment_No']
@@ -80,7 +87,7 @@ def shipment():
     # )   
 
 		return 'POST'
-	return render_template("shipment.html")
+	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher )
 
 
 
