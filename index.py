@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request , session 
+from flask import Flask, render_template , request , session ,jsonify
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -13,7 +13,7 @@ app.secret_key = 'my-super-secret-key'
 app.config['UPLOAD_FOLDER'] = 'C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\Final\\food_factory\\static\\images'
 
 
-# # shipment list
+# index
 # @app.route("/index", methods= ["GET","POST"])
 # def index():
 # 	print("hello")
@@ -182,14 +182,76 @@ def driver():
 
 
 
+@app.route("/ajax_add", methods = ['POST','GET'])
+def edit(Shipment_No):
+	print("heyyaaa")
+	if ('user' in session and session['user'] == 'admin'):
+		if request.method == 'POST':
+			# ShipmentNo = request.form['Shipment_No']
+			Vehicle_No = request.form['Vehicle_No']
+			Shipment_Type = request.form['Shipment_Type']
+			Pilot_unique_ID = request.form['Pilot_unique_ID']
+			Copilot_unique_ID = request.form['Copilot_unique_ID']
+			Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
+			Transporter = request.form['Transporter']
+
+			post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
+			print(post)
+			# post.ShipmentNo = ShipmentNo
+			post.Vehicle_No = Vehicle_No
+			post.Shipment_Type = Shipment_Type
+			post.Pilot_unique_ID = Pilot_unique_ID
+			post.Copilot_unique_ID = Copilot_unique_ID
+			post.Dispatcher_unique_ID = Dispatcher_unique_ID
+			post.Transporter = Transporter
+
+			db.session.commit()
+
+
+	return render_template("list.html")
+
+
+
+
+ 
+ # update in shipment
+@app.route("/ajax_update",methods=["POST"])
+def ajax_update():
+	print("cooollll")
+	msg = "yoo"
+	if request.method == 'POST': 
+		msg = 'update done'
+		ShipmentNo = request.form['Shipment_No']
+		Vehicle_No = request.form['Vehicle_No']
+		Shipment_Type = request.form['Shipment_Type']
+		Pilot_unique_ID = request.form['Pilot_unique_ID']
+		Copilot_unique_ID = request.form['Copilot_unique_ID']
+		Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
+		Transporter = request.form['Transporter']
+
+		post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
+		print("ajax post")
+		print(post)
+		# post.ShipmentNo = ShipmentNo
+		post.Vehicle_No = Vehicle_No
+		post.Shipment_Type = Shipment_Type
+		post.Pilot_unique_ID = Pilot_unique_ID
+		post.Copilot_unique_ID = Copilot_unique_ID
+		post.Dispatcher_unique_ID = Dispatcher_unique_ID
+		post.Transporter = Transporter
+		db.session.commit()
+		msg = 'Record successfully Updated'
+
+	return jsonify(msg)   
+
 
 # shipment list
 @app.route("/ship_list", methods= ["GET","POST"])
 def ship_list():
-	# if request.method == 'GET':
-	# 	ships = shipment.query.all()
-	# 	print(ships)
-	# 	return render_template("ship_list.html", shipment=ships)
+	ships = shipment.query.all()
+	print(ships)
+	if request.method == 'GET':
+		return render_template("ship_list.html", shipment=ships)
 	return render_template("ship_list.html")	
 
 
@@ -197,12 +259,11 @@ def ship_list():
 # driver list
 @app.route("/driver_list", methods= ["GET","POST"])
 def driver_list():
-	# if request.method == 'GET':
-	# 	emp = employee.query.all()
-	# 	print(emp)
-	# 	return render_template("driver_list.html", employee=emp)
+	if request.method == 'GET':
+		emp = employee.query.all()
+		print(emp)
+		return render_template("driver_list.html", employee=emp)
 	return render_template("driver_list.html")	
-
 
 
 class shipment(db.Model):

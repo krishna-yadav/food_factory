@@ -1,15 +1,17 @@
 {% extends "index.html" %}
 {% block head %} 
 
-<div class="container-lg">
+<div class="">
     <div class="table-responsive">
         <div class="table-wrapper">
+          <div class="table-flow">
             <div class="table-title">
-                <div class="row">
+                <div class="row ">
                     <div class="col-sm-8"><h2>Employee <b>Details</b></h2></div>
                     <div class="col-sm-4">
                         <!-- <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button> -->
                     </div>
+                    <div class='btn btn-info' id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
                 </div>
             </div>
             <table class="table table-bordered">
@@ -28,13 +30,13 @@
                 <tbody>
                     {% for row in shipment %}
                     <tr>
-                        <td>{{row.Shipment_No}}</td>
-                        <td>{{row.Vehicle_No}}</td>
-                        <td>{{row.Shipment_Type}}</td>
-                        <td>{{row.Pilot_unique_ID}}</td>
-                        <td>{{row.Copilot_unique_ID}}</td>
-                        <td>{{row.Dispatcher_unique_ID}}</td>
-                        <td>{{row.Transporter}}</td>
+                        <td><label type="text" id="Shipment_No" >{{row.Shipment_No}}</label></td>
+                        <td><label type="text" id="Vehicle_No" >{{row.Vehicle_No}}</label></td>
+                        <td><label type="text" id="Shipment_Type" >{{row.Shipment_Type}}</label></td>
+                        <td><label type="text" id="Pilot_unique_ID" >{{row.Pilot_unique_ID}}</label></td>
+                        <td><label type="text" id="Copilot_unique_ID" >{{row.Copilot_unique_ID}}</label></td>
+                        <td><label type="text" id="Dispatcher_unique_ID" >{{row.Dispatcher_unique_ID}}</label></td>
+                        <td><label type="text" id="Transporter" >{{row.Transporter}}</label></td>
                         <td>
                             
                             <a  class="edit" title="Edit" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons"> &#xE254;</i></a>
@@ -45,6 +47,7 @@
                     {% endfor %}    
                 </tbody>
             </table>
+          </div>
         </div>
     </div>
 </div>     
