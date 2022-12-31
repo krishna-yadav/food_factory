@@ -13,12 +13,6 @@ app.secret_key = 'my-super-secret-key'
 app.config['UPLOAD_FOLDER'] = 'C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\Final\\food_factory\\static\\images'
 
 
-# index
-# @app.route("/index", methods= ["GET","POST"])
-# def index():
-# 	print("hello")
-# 	return render_template("index.html")	
-
 
 @app.route("/dashboard")
 def dashboard():
@@ -117,8 +111,8 @@ def driver():
 		Emergency_Contact_No = request.form['Emergency_Contact_No']
 		Blood_Group = request.form['Blood_Group']
 		Marital_Status = request.form['Marital_Status']
-		# Spouse_Name = request.form['Spouse_Name']
-		# No_of_Children = request.form['No_of_Children']
+		Spouse_Name = request.form['Spouse_Name']
+		No_of_Children = request.form['No_of_Children']
 		Aadhar_Number = request.form['Aadhar_Number']
 		PAN_Number = request.form['PAN_Number']
 		Driving_License_Number = request.form['Driving_License_Number']
@@ -161,7 +155,7 @@ def driver():
 		 Address_1= Address_1,Address_2=Address_2,City=City,State=State,Zip_Code=Zip_Code, Mobile_No= Mobile_No, 
 		 DOB= DOB,Emergency_Contact_Person= Emergency_Contact_Person,
 		 Emergency_Contact_No= Emergency_Contact_No, Blood_Group= Blood_Group,Marital_Status= Marital_Status,
-		 # Spouse_Name= Spouse_Name,No_of_Children= No_of_Children,
+		 Spouse_Name= Spouse_Name,No_of_Children= No_of_Children,
 		 Aadhar_Number= Aadhar_Number,
 		 PAN_Number= PAN_Number,
 		 Driving_License_Number= Driving_License_Number,Driving_License_Type= Driving_License_Type,
@@ -182,40 +176,9 @@ def driver():
 
 
 
-@app.route("/ajax_add", methods = ['POST','GET'])
-def edit(Shipment_No):
-	print("heyyaaa")
-	if ('user' in session and session['user'] == 'admin'):
-		if request.method == 'POST':
-			# ShipmentNo = request.form['Shipment_No']
-			Vehicle_No = request.form['Vehicle_No']
-			Shipment_Type = request.form['Shipment_Type']
-			Pilot_unique_ID = request.form['Pilot_unique_ID']
-			Copilot_unique_ID = request.form['Copilot_unique_ID']
-			Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
-			Transporter = request.form['Transporter']
-
-			post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
-			print(post)
-			# post.ShipmentNo = ShipmentNo
-			post.Vehicle_No = Vehicle_No
-			post.Shipment_Type = Shipment_Type
-			post.Pilot_unique_ID = Pilot_unique_ID
-			post.Copilot_unique_ID = Copilot_unique_ID
-			post.Dispatcher_unique_ID = Dispatcher_unique_ID
-			post.Transporter = Transporter
-
-			db.session.commit()
-
-
-	return render_template("list.html")
-
-
-
-
  
  # update in shipment
-@app.route("/ajax_update",methods=["POST"])
+@app.route("/ajax_update",methods=['POST'])
 def ajax_update():
 	print("cooollll")
 	msg = "yoo"
@@ -230,19 +193,100 @@ def ajax_update():
 		Transporter = request.form['Transporter']
 
 		post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
-		print("ajax post")
-		print(post)
-		# post.ShipmentNo = ShipmentNo
-		post.Vehicle_No = Vehicle_No
-		post.Shipment_Type = Shipment_Type
-		post.Pilot_unique_ID = Pilot_unique_ID
-		post.Copilot_unique_ID = Copilot_unique_ID
-		post.Dispatcher_unique_ID = Dispatcher_unique_ID
-		post.Transporter = Transporter
-		db.session.commit()
-		msg = 'Record successfully Updated'
+		if post:
+			print("ajax post")
+			print(post)
+			# post.ShipmentNo = ShipmentNo
+			post.Vehicle_No = Vehicle_No
+			post.Shipment_Type = Shipment_Type
+			post.Pilot_unique_ID = Pilot_unique_ID
+			post.Copilot_unique_ID = Copilot_unique_ID
+			post.Dispatcher_unique_ID = Dispatcher_unique_ID
+			post.Transporter = Transporter
+			db.session.commit()
+			msg = 'Record successfully Updated'
+		else :
+			msg = 'shipment number is not changable'
+			return jsonify(msg)
+
 
 	return jsonify(msg)   
+
+
+
+ # update in driver
+@app.route("/ajax_driver_update",methods=['POST'])
+def ajax_driver_update():
+	print("drive away")
+	if request.method == 'POST': 
+		msg = 'update done'
+		Unique_ID = request.form['Unique_ID']
+		Date_of_Onboard = request.form['Date_of_Onboard']
+		First_Name = request.form['First_Name']
+		Middle_Name = request.form['Middle_Name']
+		Last_Name = request.form['Last_Name']
+		Transporter = request.form['Transporter']
+		Role = request.form['Role']
+		Address_1 = request.form['Address_1']
+		Address_2 = request.form['Address_2']
+		City = request.form['City']
+		State = request.form['State']
+		Zip_Code = request.form['Zip_Code']
+		Mobile_No = request.form['Mobile_No']
+		DOB = request.form['DOB']
+		Emergency_Contact_Person = request.form['Emergency_Contact_Person']
+		Emergency_Contact_No = request.form['Emergency_Contact_No']
+		Blood_Group = request.form['Blood_Group']
+		Marital_Status = request.form['Marital_Status']
+		Spouse_Name = request.form['Spouse_Name']
+		No_of_Children = request.form['No_of_Children']
+		Aadhar_Number = request.form['Aadhar_Number']
+		PAN_Number = request.form['PAN_Number']
+		Driving_License_Number = request.form['Driving_License_Number']
+		Driving_License_Type = request.form['Driving_License_Type']
+		Drive_License_Validity = request.form['Drive_License_Validity']
+		Vaccination_Name = request.form['Vaccination_Name']
+		Dose1_Date = request.form['Dose1_Date']
+		Dose2_Date = request.form['Dose2_Date']
+		Booster_Dose_Date = request.form['Booster_Dose_Date']
+		Education_Qualification = request.form['Education_Qualification']
+		Aadhar_Attachment = request.form['Aadhar_Attachment']
+		PANCard_Attachment = request.form['PANCard_Attachment']
+		Driver_Lic_Attachment = request.form['Driver_Lic_Attachment']
+		Vaccination_Certi_Attachment = request.form['Vaccination_Certi_Attachment']
+		Photo_Attachment = request.form['Photo_Attachment']
+		print("Date_of_Onboard: ",Date_of_Onboard)
+
+		post = employee.query.filter_by(Unique_ID=Unique_ID).first()
+		if post:
+			print("ajax post")
+			print(post)
+			post.First_Name = First_Name
+			post.Middle_Name = Middle_Name
+			post.Last_Name = Last_Name
+			post.Transporter = Transporter
+			post.Role = Role
+			post.Address_1 = Address_1
+			post.Address_2 = Address_2
+			post.City = City
+			post.State = State
+			post.Zip_Code = Zip_Code
+			post.Mobile_No = Mobile_No
+			post.Driving_License_Number = Driving_License_Number
+			post.Driving_License_Type = Driving_License_Type
+			post.Drive_License_Validity = Drive_License_Validity
+			db.session.commit()
+			msg = 'Record successfully Updated'
+		else :
+			msg = 'shipment number is not changable'
+			return jsonify(msg)
+
+
+	return jsonify(msg)   
+
+
+
+   
 
 
 # shipment list
@@ -255,13 +299,12 @@ def ship_list():
 	return render_template("ship_list.html")	
 
 
-
 # driver list
 @app.route("/driver_list", methods= ["GET","POST"])
 def driver_list():
+	emp = employee.query.all()
+	print(emp)
 	if request.method == 'GET':
-		emp = employee.query.all()
-		print(emp)
 		return render_template("driver_list.html", employee=emp)
 	return render_template("driver_list.html")	
 

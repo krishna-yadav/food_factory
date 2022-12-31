@@ -15,7 +15,8 @@
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
     <link href="{{url_for('static', filename= 'css/ship.css') }}" rel='stylesheet'>
-    <script type="text/javascript" src="{{url_for('static', filename= 'js/ship_list.js') }}" > </script>
+    
+
 
     <!-- table links -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -113,8 +114,12 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
+    {% block footer %}
+    
+    {% endblock %}
 	<script type="text/javascript" src="{{url_for('static', filename= 'js/driver.js') }}" > </script>
     <script type="text/javascript" src="{{url_for('static', filename= 'js/popper.js') }}" > </script>
+
     <script type="text/javascript" src="{{url_for('static', filename= 'js/bootstrap.min.js') }}" > </script>
     <script type="text/javascript" src="{{url_for('static', filename= 'js/main.js') }}" > </script>
   </body>

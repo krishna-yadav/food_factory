@@ -7,48 +7,49 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-12"><h2>Employee <b>Details</b></h2></div>
-                    
+                    <div class='btn btn-info' id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
                 </div>
             </div>
             <div class="table table-bordered" style="padding: 10px 10px 10px 10px">
-            <table class="table table-bordered" action = "/driver_list" method = "GET">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Unique_ID</th>
                         <th>Date_of_Onboard</th>
-                        <th>First_Name</th>
-                        <th>Middle_Name</th>
-                        <th>Last_Name</th>
-                        <th>Transporter</th>
+                        <th>F_Name</th>
+                        <th>M_Name</th>
+                        <th>L_Name</th>
+                        <th>Transpoter</th>
                         <th>Role</th>
                         <th>Address_1</th>
                         <th>Address_2</th>
                         <th>City</th>
                         <th>State</th>
                         <th>Zip_Code</th>
-                        <th>Mobile_No</th>
+                        <th>Phone</th>
                         <th>DOB</th>
-                        <th>Emergency_Contact_Person</th>
+                        <th>Emergency_Person</th>
                         <th>Emergency_Contact_No</th>
                         <th>Blood_Group</th>
                         <th>Marital_Status</th>
+                        <th>Spouse_Name</th>
+                        <th>No_of_Children</th>
                         <th>Aadhar_Number</th>
                         <th>PAN_Number</th>
-                        <th>Driving_License_Number</th>
-                        <th>Driving_License_Type</th>
-                        <th>Drive_License_Validity</th>
+                        <th>DL_No</th>
+                        <th>DL_Type</th>
+                        <th>DL_Date</th>
                         <th>Vaccination_Name</th>
                         <th>Dose1_Date</th>
                         <th>Dose2_Date</th>
                         <th>Booster_Dose_Date</th>
                         <th>Education_Qualification</th>
-                        <!-- <th>Aadhar_Attachment</th>
+                        <th>Aadhar_Attachment</th>
                         <th>PANCard_Attachment</th>
                         <th>Driver_Lic_Attachment</th>
                         <th>Vaccination_Certi_Attachment</th>
-                        <th>Photo_Attachment</th> -->
+                        <th>Photo_Attachment</th>
                         <th>Update</th>
-                        <!-- <th>Actions</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -72,6 +73,8 @@
                         <td>{{row.Emergency_Contact_No}}</td>
                         <td>{{row.Blood_Group}}</td>
                         <td>{{row.Marital_Status}}</td>
+                        <td>{{row.Spouse_Name}}</td>
+                        <td>{{row.No_of_Children}}</td>
                         <td>{{row.Aadhar_Number}}</td>
                         <td>{{row.PAN_Number}}</td>
                         <td>{{row.Driving_License_Number}}</td>
@@ -82,14 +85,14 @@
                         <td>{{row.Dose2_Date}}</td>
                         <td>{{row.Booster_Dose_Date}}</td>
                         <td>{{row.Education_Qualification}}</td>
-                        <!-- <td>{{row.Aadhar_Attachment}}</td>
+                        <td>{{row.Aadhar_Attachment}}</td>
                         <td>{{row.PANCard_Attachment}}</td>
                         <td>{{row.Driver_Lic_Attachment}}</td>
                         <td>{{row.Vaccination_Certi_Attachment}}</td>
-                        <td>{{row.Photo_Attachment}}</td> -->
+                        <td>{{row.Photo_Attachment}}</td>
                         <td>
-                            <a class="add" title="Add" data-toggle="tooltip" id="{{row.Unique_ID}}"><i class="material-icons">&#xE03B;</i></a>
-                            <a  class="edit" title="Edit" data-toggle="tooltip" id="{{row.Unique_ID}}"><i class="material-icons"> &#xE254;</i></a>
+                            <a class="add" title="Add" data-toggle="tooltip pro" id="{{row.Unique_ID}}"><i class="material-icons">&#xE03B;</i></a>
+                            <a  class="edit" title="Edit" data-toggle="tooltip pro" id="{{row.Unique_ID}}"><i class="material-icons"> &#xE254;</i></a>
                             <!-- <a class="delete" title="Delete" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons">&#xE872;</i></a> -->
                         </td>
                     </tr>
@@ -98,7 +101,7 @@
             </table>
         </div>
             <div class="table"></div>
-            <br><br><br><br><br><br>
+            
             <div class="table"></div><br>
             
 
@@ -110,3 +113,7 @@
 
 
 {% endblock %}
+
+{% block footer %}
+<script type="text/javascript" src="{{url_for('static', filename= 'js/driver_list.js') }}" > </script>
+    {% endblock %}
