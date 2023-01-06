@@ -43,6 +43,9 @@
 	          <li>
 	              <a href="/shipment">Register Shipment</a>
 	          </li>
+	          <li>
+	              <a href="/end_ship">End Shipment</a>
+	          </li>
 	          <li class="active">
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Update</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -58,18 +61,15 @@
               <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Report</a>
               <ul class="collapse list-unstyled" id="pageSubmenu">
                 <li>
-                    <a >Driver's Report</a>
+                    <a href="{{url_for('.download_Driver_report')}}">Driver's Report</a>
                 </li>
                 <li>
-                    <a >Shipment Report</a>
+                    <a href="{{url_for('.download_Shipment_report')}}">Shipment Report</a>
                 </li>
               </ul>
 	          </li>
 	          <li>
-              <a href="#">About</a>
-	          </li>
-	          <li>
-              <a href="#">Contact</a>
+              <a href="/logout">Logout</a>
 	          </li>
 	        </ul>
 

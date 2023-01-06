@@ -1,0 +1,109 @@
+{% extends "index.html" %}
+{% block head %} 
+
+
+<script>
+$(document).ready(function () {
+    $(".text").hide();
+    $("#submit").click(function () {
+        $(".text").show();
+    });
+//     $("#hide").click(function () {
+//         $(".text").hide();
+//     });
+// });
+</script>
+     
+           
+        <div class="container-fluid px-1 py-40 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-9 text-center">
+                <!-- <div class="col-xl-5 col-lg-6 col-md-7 col-9 text-center"> -->
+                    <!-- <h3>Domino's Venture</h3> -->
+
+                    <br>
+
+                    <form class="form-card"  action = "/end_ship" method = "POST">
+                            <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-8 flex-column d-flex"> <input type="search" id="sno" name ="sno" placeholder="Shipment Number" /> </div>
+                        <div class="form-group col-sm-4 flex-column d-flex"> <button type="seach" id="search" class="btn-primary"><i class="fa fa-search" >  Search</i></button> </div>
+                        <!-- <div class="form-group col-sm-4 flex-column d-flex"> <button type="hide" id="hide" class="btn-primary"><i class="fa fa-search" >  hide</i></button> </div> -->
+                    </div>
+                    </form> 
+                    
+                    
+                    <!-- <div class = "text" > -->
+                    <div class="card">
+                        <h5 class="text-center mb-4">Driver Tracking</h5>
+                        
+                        <form class="form-card" action = "/end_ship" method = "GET"><!--  <form>   -->
+                            <div class = "text">
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Shipment number
+                               :    {{shipment.Shipment_No}} </label>
+                                    <!-- <input type="text" id="fname" name="Shipment_No" placeholder="" onblur="validate(1)">  -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class=" form-control-label px-3">Vehicle Number:    {{shipment.Vehicle_No}} </label>
+                                    <!-- <input type="text" id="email" name="Vehicle_No" placeholder="" onblur="validate(2)">  -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Shipment type:    {{shipment.Shipment_Type}} </label>
+                                    <!-- <label class="form-control-label px-3"><input type="radio" name="Shipment_Type">   Local</label>
+                                    <label class="form-control-label px-3"><input type="radio" id="job" name="Shipment_Type" placeholder="" onblur="validate(3)"> Outstation</label>  -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Pilot Unique ID:    {{shipment.Pilot_unique_ID}} </label>
+                                    <!-- <input type="text" id="job" name="Pilot_unique_ID" placeholder="" onblur="validate(4)">  -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3    ">Co-Pilot Unique ID:    {{shipment.Copilot_unique_ID}} </label>
+                                 <!-- <input type="text" id="ans" name="Copilot_unique_ID" placeholder="" onblur="validate(5)">  -->
+                             </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Dispatcher Unique ID:    {{shipment.Dispatcher_unique_ID}} </label>
+                                    <!-- <input type="text" id="ans" name="Dispatcher_unique_ID" placeholder="" onblur="validate(6)"> -->
+                                     </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Transporter:     {{shipment.Transporter}} </label>
+                                    <!-- <input type="text" id="ans" name="Transporter" placeholder="" onblur="validate(6)">  -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">Add_Time:     {{shipment.Add_Time}} </label>
+                                    <!-- <input type="text" id="ans" name="Transporter" placeholder="" onblur="validate(6)">  -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">End_Time:     {{shipment.End_Time}} </label>
+                                    <!-- <input type="text" id="ans" name="Transporter" placeholder="" onblur="validate(6)">  -->
+                                </div>
+                            </div>
+                            <!-- <div class="row justify-content-center text-left">
+                                <div class="form-group col-8 flex-column d-flex"> <label class="form-control-label px-3   ">End_Time</label> <input type="text" id="End_Time" name="End_Time" placeholder="" onblur="validate(6)"> </div>
+                            </div> -->
+                            <div class="row justify-content-center">
+                                <div class="form-group col-sm-6"> <button type="submit" id="submit" class="w-100 btn btn-lg btn-primary">End Shiping</button> 
+                            </div>
+                            </div>
+                        </div>
+                             
+                    </div>
+
+
+                    </form>
+                <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+
+
+{% endblock %}

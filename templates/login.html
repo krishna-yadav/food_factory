@@ -12,17 +12,20 @@
   <body class="text-center">
     
 <main class="container-fluid form-signin w-100 m-auto">
+
   <form action = "/login" method = "POST">
     <img class="mb-4" src="{{url_for('static', filename= 'images/1.jpg') }}" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">LogIn Account</h1>
-
+    <!-- <div class='btn btn-info' id="displaymessage" style="display:none;width:10%;margin-top:1px;">
+    <h1>dfghhg</h1></div> -->
     <div class="form-floating">
-      <input type="text" class="form-control" id="user" name="user" placeholder="User Name" required>
-      <label for="user"> Name</label>
+      
+      <input type="text" class="form-control" id="user" name="user" placeholder="" required>
+      <label for="user">User Name</label>
     </div>
     <hr>
     <div class="form-floating">
-      <input type="password" class="form-control" id="pass" name= "pass" placeholder="Password" required>
+      <input type="password" class="form-control" id="pass" name= "pass" placeholder="" required>
       <label for="pass">Password</label>
     </div>
 
