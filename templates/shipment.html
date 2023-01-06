@@ -31,7 +31,7 @@
 
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Pilot Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex " id="Pilot_unique_ID"  name="Pilot_unique_ID" placeholder="Pilot_unique_ID" onblur="validate(4)" style="padding-top: 10px; align-self: stretch;" required>
+                                    <select class="form-group col-sm-8 flex-column d-flex Pilot_unique_ID" id="Pilot_unique_ID"  name="Pilot_unique_ID" placeholder="Pilot_unique_ID" onblur="validate(4)" style="padding-top: 10px; align-self: stretch;" required>
                                         <option value=""> </option>
                                         {% for row in Driver %}
                                         <option value="{{row.Unique_ID}}">{{row.Unique_ID}}</option>
@@ -39,10 +39,10 @@
                                     </select>
                                 </div>
                             </div>
-
+                            
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Co-Pilot Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex " id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;" required>
+                                    <select class="form-group col-sm-8 flex-column d-flex Copilot_unique_ID" id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;" required>
                                         <option value=""> </option>
                                         {% for row in Driver %}
                                         <option value="{{row.Unique_ID}}">{{row.Unique_ID}}</option>
@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Dispatcher Unique ID<span class="text-danger"> *</span></label> 
+                                <div class="form-group col-sm-8 flex-column d-flex" > <label class="form-control-label px-3">Dispatcher Unique ID<span class="text-danger"> *</span></label> 
                                     <select class="form-group col-sm-8 flex-column d-flex " id="Dispatcher_unique_ID"  name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;" required>
                                         <option value=""> </option>
                                         {% for row in Dispatcher %}
@@ -98,3 +98,61 @@
 
 
 {% endblock %}
+
+
+
+
+{% block footer %}
+
+<!-- <script>
+    var selectedItem = ""
+      $(document).ready(function() {
+          $("#Pilot_unique_ID").change(function() {
+              var selectedItem = $(this).children("option:selected").val();
+              alert("You have selected the name - " + selectedItem);
+            
+
+          $("#Copilot_unique_ID").change(function() {
+                // alert("You have selected the name - " + selectedItem);
+              var compareItem = $(this).children("option:selected").val();
+              // alert("You have selected the name - " + compareItem);
+              if (selectedItem == compareItem)
+              {
+                alert("Pilot_1 and pilot_2 can't be same");
+              }
+              
+            });
+          });
+        });
+
+          
+
+    </script> -->
+
+
+<script>
+
+    $('.Pilot_unique_ID').on('change', function() {
+  var selected_options = $('.Pilot_unique_ID').map(function(){
+    return this.value
+  }).get();
+
+  $('.Copilot_unique_ID option').each(function(index) {
+    $(this).prop('disabled', $.inArray($(this).val(), selected_options) != -1);
+  });
+});
+
+
+    $('.Copilot_unique_ID').on('change', function() {
+  var selected_options = $('.Copilot_unique_ID').map(function(){
+    return this.value
+  }).get();
+
+  $('.Pilot_unique_ID option').each(function(index) {
+    $(this).prop('disabled', $.inArray($(this).val(), selected_options) != -1);
+  });
+});
+
+
+ </script>
+     {% endblock %}

@@ -55,8 +55,8 @@ def logout():
 # shipment form
 @app.route("/shipment", methods = ['GET','POST'])
 def shipment():
-	Driver = employee.query.filter_by(Role='Driver')
-	Dispatcher = employee.query.filter_by(Role='Dispatcher')
+	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No')
+	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No')
 	print("Driver")
 	print(Driver)
 	# for i in driver:
@@ -238,7 +238,7 @@ def driver():
 		db.session.commit()
 
 
-		act_entry = activity(Unique_ID = S,BGV = 'No', Avaialbility = 'Yes', Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
+		act_entry = activity(Unique_ID = S,Role = Role, BGV = 'No', Avaialbility = 'Yes', Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
 		print(entry)
 		db.session.add(act_entry)
 		db.session.commit()
@@ -383,6 +383,7 @@ def driver_list():
 def download_Driver_report():
 	if request.method == 'GET':
 		driver = employee.query.all()
+		act = activity.query.all()
 
 
 		print()
@@ -426,9 +427,17 @@ def download_Driver_report():
 		sh.write( 0,32,'Driver_Lic_Attachment')
 		sh.write( 0,33,'Vaccination_Certi_Attachment')
 		sh.write( 0,34,'Photo_Attachment')
+		sh.write( 0,35,'BGV')
+		sh.write( 0,36,'Avaialbility')
+		sh.write( 0,37,'Last_shipment_day')
+		sh.write( 0,38,'On_Shipment')
+		sh.write( 0,39,'Blacklisted')
 
 
 		idx = 0
+		print("olaa")
+		print(type(driver[1]))
+		print(act)
 		for row in driver:
 			print(row)
 			sh.write(idx+1,0, str(row.Unique_ID))
@@ -466,6 +475,12 @@ def download_Driver_report():
 			sh.write(idx+1,32, str(row.Driver_Lic_Attachment))
 			sh.write(idx+1,33, str(row.Vaccination_Certi_Attachment))
 			sh.write(idx+1,34, str(row.Photo_Attachment))
+			act = activity.query.filter_by(Unique_ID = row.Unique_ID).first()
+			sh.write(idx+1,35, str(act.BGV))
+			sh.write(idx+1,36, str(act.Avaialbility))
+			sh.write(idx+1,37, str(act.Last_shipment_day))
+			sh.write(idx+1,38, str(act.On_Shipment))
+			sh.write(idx+1,39, str(act.Blacklisted))
 			idx += 1
 
 		WORKBOOK.save(output)
@@ -537,6 +552,7 @@ class shipment(db.Model):
 class activity(db.Model):
 	print("hello")
 	Unique_ID   = db.Column(db.String(80), primary_key=True, nullable=False)
+	Role = db.Column(db.String(10), unique=False, nullable=True)
 	BGV = db.Column(db.String(10), unique=False, nullable=True)
 	Avaialbility = db.Column(db.String(10), unique=False, nullable=True)
 	Last_shipment_day = db.Column(db.String(120), unique=False, nullable=True)
