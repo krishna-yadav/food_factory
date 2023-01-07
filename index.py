@@ -1,8 +1,9 @@
-from flask import Flask, render_template , request , session ,jsonify,Response
+from flask import Flask, render_template , request , session ,jsonify,Response, flash, redirect
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
+import os 
 import io
 import xlwt
 
@@ -59,11 +60,7 @@ def shipment():
 	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No')
 	print("Driver")
 	print(Driver)
-	# for i in driver:
-	# 	print(i)
-	# emp = employee.query.all()
-	# print("emp")
-	# print(emp)
+
 	if request.method == 'POST':
 		s= []
 		ShipmentNo = request.form['Shipment_No']
@@ -72,35 +69,47 @@ def shipment():
 		Pilot_unique_ID = request.form['Pilot_unique_ID']
 		Copilot_unique_ID = request.form['Copilot_unique_ID']
 		Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
-		s.append(Pilot_unique_ID)
-		s.append(Copilot_unique_ID)
-		s.append(Dispatcher_unique_ID)
+		
 		Transporter = request.form['Transporter']
 
-		entry = shipment(Shipment_No = ShipmentNo, Vehicle_No= Vehicle_No, Shipment_Type= Shipment_Type,Pilot_unique_ID= s[0],Copilot_unique_ID= s[1],
-		 Dispatcher_unique_ID= s[2],Transporter= Transporter, Add_Time= datetime.now())
-		 # , End_Time = datetime.now())
-			 # ,Add_Time= Add_Time, End_Time= End_Time)
 
-		print(entry)
-		db.session.add(entry)
-		db.session.commit()
-		print(s)
-		for i in s:
-			print()
-			post = activity.query.filter_by(Unique_ID=i).first()
-			print("poastaaaa")
-			print(post.On_Shipment)
-			post.On_Shipment= 'Yes'
+		post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
+
+		if Copilot_unique_ID :
+			s.append(Pilot_unique_ID)
+			s.append(Copilot_unique_ID)
+			s.append(Dispatcher_unique_ID)
+		else:
+			s.append(Pilot_unique_ID)
+			Copilot_unique_ID = 'No'
+			s.append(Dispatcher_unique_ID)
+			
+
+		if post :
+			flash("Shipment number already exist", "error")
+			return redirect(request.path,code=302) 
+		else:
+			print("Shipment_Type")
+			print(Shipment_Type)
+			entry = shipment(Shipment_No = ShipmentNo, Vehicle_No= Vehicle_No, Shipment_Type= Shipment_Type,
+				Pilot_unique_ID= Pilot_unique_ID,Copilot_unique_ID= Copilot_unique_ID,
+				Dispatcher_unique_ID= Dispatcher_unique_ID,Transporter= Transporter, Add_Time= datetime.now())
+			 # , End_Time = datetime.now())
+				 # ,Add_Time= Add_Time, End_Time= End_Time)
+
+			print(entry)
+			db.session.add(entry)
 			db.session.commit()
-
-	# 	mail.send_message('New message from me',
-    # sender = 'krishna.yadav25021999@gmail.com',
-    # recipients = ['krishna.yadav25021999@gmail.com'] ,
-    # body = "message",
-    # )   
-
-		return 'POST'
+			print(s)
+			for i in s:
+				print()
+				post = activity.query.filter_by(Unique_ID=i).first()
+				print("poastaaaa")
+				print(post.On_Shipment)
+				post.On_Shipment= 'Yes'
+				db.session.commit()
+			flash("Shipping Successful")
+			return redirect(request.path,code=302) 
 	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher )
 
 
@@ -191,27 +200,32 @@ def driver():
 		Vaccination_Certi_Attachment = request.files['Vaccination_Certi_Attachment']
 		Photo_Attachment = request.files['Photo_Attachment']
 
+		S = First_Name[0:4]+'_'+Transporter[0:4]
+		# S = 'C008'+Transporter[0]+Role[0]
+		print(S)
+		user_folder = os.path.join(app.config['UPLOAD_FOLDER'], S)
+		print(user_folder)
+		os.makedirs(user_folder)
 		if Aadhar_Attachment :
-			Aadhar_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(Aadhar_Attachment.filename)))
+			Aadhar_Attachment.save(join(user_folder, secure_filename(Aadhar_Attachment.filename)))
 			Aadhar_Attachment = "Yes"
 		if PANCard_Attachment :
-			PANCard_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(PANCard_Attachment.filename)))
+			PANCard_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(PANCard_Attachment.filename)))
 			PANCard_Attachment = "Yes"
 		else:
 			PANCard_Attachment = "No"
 		if Driver_Lic_Attachment :
-			Driver_Lic_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(Driver_Lic_Attachment.filename)))
+			Driver_Lic_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(Driver_Lic_Attachment.filename)))
 			Driver_Lic_Attachment = "Yes"
 		if Vaccination_Certi_Attachment :
-			Vaccination_Certi_Attachment.save(join(app.config['UPLOAD_FOLDER'], secure_filename(Vaccination_Certi_Attachment.filename)))
+			Vaccination_Certi_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(Vaccination_Certi_Attachment.filename)))
 			Vaccination_Certi_Attachment = "Yes"
 		if Photo_Attachment :
-			Photo_Attachment.save(join(app.config['UPLOAD_FOLDER'] , secure_filename(Photo_Attachment.filename)))
+			Photo_Attachment.save(join(app.config['UPLOAD_FOLDER'] +'\\'+S, secure_filename(Photo_Attachment.filename)))
 			Photo_Attachment = "Yes"
 
 
-		S = First_Name[0:4]+'_'+Transporter[0:4]
-		print(S)
+		
 		entry = employee(
 			Unique_ID = S , 
 			Date_of_Onboard= Date_of_Onboard,
@@ -243,7 +257,8 @@ def driver():
 		db.session.add(act_entry)
 		db.session.commit()
 
-		return 'POST'
+		flash(Role +" added Successful")
+		return redirect(request.path,code=302)
 	return render_template("driver.html")
 
 
@@ -562,7 +577,7 @@ class activity(db.Model):
 
 class employee(db.Model):
 	print("hello")
-	Unique_ID = db.Column(db.String(80), primary_key=True, nullable=False)
+	Unique_ID =  db.Column(db.String(80), primary_key=True, nullable=False, AUTO_INCREMENT=True)
 	Date_of_Onboard = db.Column(db.String(80), primary_key=False, nullable=False)
 	First_Name = db.Column(db.String(80), primary_key=False, nullable=False)
 	Middle_Name = db.Column(db.String(80), primary_key=False, nullable=True)
