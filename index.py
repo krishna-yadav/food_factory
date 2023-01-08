@@ -200,8 +200,9 @@ def driver():
 		Vaccination_Certi_Attachment = request.files['Vaccination_Certi_Attachment']
 		Photo_Attachment = request.files['Photo_Attachment']
 
-		S = First_Name[0:4]+'_'+Transporter[0:4]
-		# S = 'C008'+Transporter[0]+Role[0]
+		obj = employee.query.order_by(employee.Unique_ID.desc()).first()
+		uni_code = int(obj.Unique_ID[-4:]) +1
+		S = 'C008'+Transporter[0:3]+Role[0]+ str(uni_code).zfill(4)
 		print(S)
 		user_folder = os.path.join(app.config['UPLOAD_FOLDER'], S)
 		print(user_folder)
@@ -224,8 +225,9 @@ def driver():
 			Photo_Attachment.save(join(app.config['UPLOAD_FOLDER'] +'\\'+S, secure_filename(Photo_Attachment.filename)))
 			Photo_Attachment = "Yes"
 
+		print("S being printed")
+		print(S)
 
-		
 		entry = employee(
 			Unique_ID = S , 
 			Date_of_Onboard= Date_of_Onboard,
