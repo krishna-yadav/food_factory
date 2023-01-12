@@ -57,6 +57,9 @@
                 <li>
                     <a href="/ship_list">Shipment Details</a>
                 </li>
+                <li>
+                    <a href="/activity_list">Activity Details</a>
+                </li>
 	            </ul>
 	          </li>
 	          <li>
@@ -111,15 +114,16 @@
 	</div>
 	<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
 	<script type="text/javascript" src="{{url_for('static', filename= 'js/ship.js') }}" > </script>
+	
+    {% block footer %}
+    
+    {% endblock %}
+	<script type="text/javascript" src="{{url_for('static', filename= 'js/driver.js') }}" > </script>
 	<script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-    {% block footer %}
-    
-    {% endblock %}
-	<script type="text/javascript" src="{{url_for('static', filename= 'js/driver.js') }}" > </script>
     <script type="text/javascript" src="{{url_for('static', filename= 'js/popper.js') }}" > </script>
 
     <script type="text/javascript" src="{{url_for('static', filename= 'js/bootstrap.min.js') }}" > </script>

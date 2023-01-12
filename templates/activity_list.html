@@ -1,0 +1,65 @@
+{% extends "index.html" %}
+{% block head %} 
+
+<div class="">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+          <div class="table-flow">
+            <div class="table-title">
+                <div class="row ">
+                    <div class="col-sm-8"><h2>Availablity <b>Details</b></h2></div>
+                    <div class="col-sm-4">
+                        <!-- <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button> -->
+                    </div>
+                    <div class='btn btn-info' id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Unique_ID </th>
+                        <th>Role</th>
+                        <th>BGV</th>
+                        <th>Avaialbility</th>
+                        <th>Last_shipment_day</th>
+                        <th>On_Shipment</th>
+                        <th>Blacklisted</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in activity %}
+                    <tr>
+                        <td><label type="text" id="Unique_ID " >{{row.Unique_ID }}</label></td>
+                        <td><label type="text" id="Role" >{{row.Role}}</label></td>
+                        <td><label type="text" id="BGV" >{{row.BGV}}</label></td>
+                        <td><label type="text" id="Avaialbility" >{{row.Avaialbility}}</label></td>
+                        <td><label type="text" id="Last_shipment_day" >{{row.Last_shipment_day}}</label></td>
+                        <td><label type="text" id="On_Shipment" >{{row.On_Shipment}}</label></td>
+                        <td><label type="text" id="Blacklisted" >{{row.Blacklisted}}</label></td>
+                        <td>
+                            
+                            <a  class="edit" title="Edit" data-toggle="tooltip" id="{{row.Unique_ID}}"><i class="material-icons"> &#xE254;</i></a>
+                            <a class="add" title="Add" data-toggle="tooltip" id="{{row.Unique_ID}}"><i class="material-icons">&#xE03B;</i></a>
+                            <!-- <a class="delete" title="Delete" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons">&#xE872;</i></a> -->
+                        </td>
+                    </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+</div>     
+            <!-- <div class="table"></div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="table"></div><br> -->
+
+
+{% endblock %}
+
+
+{% block footer %}
+
+    <script type="text/javascript" src="{{url_for('static', filename= 'js/activity_list.js') }}" > </script>
+{% endblock %}

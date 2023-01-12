@@ -44,8 +44,8 @@ $(document).ready(function(){
         var Driver_Lic_Attachment = $("#Driver_Lic_Attachment").val();
         var Vaccination_Certi_Attachment  = $("#Vaccination_Certi_Attachment").val();
         var Photo_Attachment = $("#Photo_Attachment").val();
-        $("#displaymessage").html(Unique_ID);
-            $("#displaymessage").show();
+        // $("#displaymessage").html(Unique_ID);
+        //     $("#displaymessage").show();
         
         $.post('/ajax_driver_update', { string: string, Unique_ID : Unique_ID , 
             Date_of_Onboard: Date_of_Onboard,
@@ -76,8 +76,8 @@ $(document).ready(function(){
         $(this).parents("tr").find("td:not(:last-child)").each(function(i){
             if (i=='0'){
                 var idname = 'Unique_ID';
-                $("#displaymessage").html(idname); 
-                $("#displaymessage").show();
+                // $("#displaymessage").html(idname); 
+                // $("#displaymessage").show();
             }else if (i=='1'){
                 var idname = 'Date_of_Onboard';
             }else if (i=='2'){

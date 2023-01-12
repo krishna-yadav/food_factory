@@ -1,20 +1,29 @@
 from flask import Flask, render_template , request , session ,jsonify,Response, flash, redirect
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
 import os 
 import io
 import xlwt
+import json
 
 
+with open('config.json', 'r') as c:
+    params = json.load(c)["params"]
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/zubilant'
+if params['local_server']:
+	app.config['SQLALCHEMY_DATABASE_URI'] = params['local_uri']
+else:
+	app.config['SQLALCHEMY_DATABASE_URI'] = params['prod_uri']
+
+
 db = SQLAlchemy(app)
-app.secret_key = 'my-super-secret-key'
-app.config['UPLOAD_FOLDER'] = 'C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\Final\\food_factory\\static\\images'
+app.secret_key = params['secret_key']
+app.config['UPLOAD_FOLDER'] = params['UPLOAD_FOLDER']
 
 # pdyypnwmzcdebfbx
 
@@ -23,20 +32,34 @@ app.config['UPLOAD_FOLDER'] = 'C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\F
 def dashboard():
 	print("hii")
 	return render_template("dashboard.html")
+
+
 	
 
 
 # login page
 @app.route("/login", methods = ['GET','POST'])
 def login():
-	if ('user' in session and session['user'] == 'admin'):
-		return render_template("dashboard.html")
+	# if ('user' in session and session['user'] == 'admin'):
+	# 	return render_template("dashboard.html")
 	msg = "user or passwrod did not match"
 	if request.method == 'POST':
 		username = request.form['user']
 		password = request.form['pass']
 		if (username == 'admin' and password == 'admin'):
 			session['user'] = username
+
+			emp = employee.query.all()
+			for i in emp :
+				try :
+					print(i.Drive_License_Validity)
+					# if i.Drive_License_Validity is not '0000-00-00':
+					if datetime.strptime(str(i.Drive_License_Validity), '%y-%m-%d') < datetime.now():
+						act = activity.query.filter_by(Unique_ID =  i.Unique_ID).first()
+						act.Avaialbility= 'No'
+						db.session.commit()
+				except:
+					pass
 			return render_template("dashboard.html")
 		else :
 			return render_template("login.html",msg = "user or passwrod did not match")
@@ -46,9 +69,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-	print(session['user'])
-	print("hii")
-	session.pop('user')
+	try :
+		session.pop('user')
+	except :
+		return render_template("login.html")
 	return render_template("login.html")
 
 
@@ -56,8 +80,9 @@ def logout():
 # shipment form
 @app.route("/shipment", methods = ['GET','POST'])
 def shipment():
-	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No')
-	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No')
+	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No',Avaialbility = 'Yes')
+	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No',Avaialbility = 'Yes')
+	Transport = transport.query.all()
 	print("Driver")
 	print(Driver)
 
@@ -69,7 +94,6 @@ def shipment():
 		Pilot_unique_ID = request.form['Pilot_unique_ID']
 		Copilot_unique_ID = request.form['Copilot_unique_ID']
 		Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
-		
 		Transporter = request.form['Transporter']
 
 
@@ -110,7 +134,7 @@ def shipment():
 				db.session.commit()
 			flash("Shipping Successful")
 			return redirect(request.path,code=302) 
-	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher )
+	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher , Transport =Transport)
 
 
 SNo = None
@@ -161,6 +185,7 @@ def end_ship():
 @app.route("/driver", methods = ['GET','POST'])
 def driver():
 	print("uuuuu")
+	Tran = transport.query.all()
 	if request.method == 'POST':
 		print("YOOOOOOOO")
 
@@ -188,7 +213,7 @@ def driver():
 		PAN_Number = request.form['PAN_Number']
 		Driving_License_Number = request.form['Driving_License_Number']
 		Driving_License_Type = request.form['Driving_License_Type']
-		Drive_License_Validity = request.form['Drive_License_Validity']
+		DLV = request.form['Drive_License_Validity']
 		Vaccination_Name = request.form['Vaccination_Name']
 		Dose1_Date = request.form['Dose1_Date']
 		Dose2_Date = request.form['Dose2_Date']
@@ -200,9 +225,26 @@ def driver():
 		Vaccination_Certi_Attachment = request.files['Vaccination_Certi_Attachment']
 		Photo_Attachment = request.files['Photo_Attachment']
 
-		obj = employee.query.order_by(employee.Unique_ID.desc()).first()
-		uni_code = int(obj.Unique_ID[-4:]) +1
-		S = 'C008'+Transporter[0:3]+Role[0]+ str(uni_code).zfill(4)
+		
+		obj = employee.query.all()
+		uni_code = 0
+		for i in obj:
+			a = int(i.Unique_ID[-4:])
+			if a > uni_code :
+				uni_code = a
+		tran = transport.query.filter_by(Transporter = Transporter).first()
+
+		print(tran.Transporter_ID )
+		print(uni_code)
+		uni_code += 1 
+		print("uni_code")
+		print(uni_code)
+		if Role == 'Driver':
+			R = 'P'
+		else :
+			R = 'D'
+		S = 'C008'+tran.Transporter_ID[-3:]+R+ str(uni_code).zfill(4)
+		print(S)
 		print(S)
 		user_folder = os.path.join(app.config['UPLOAD_FOLDER'], S)
 		print(user_folder)
@@ -218,6 +260,9 @@ def driver():
 		if Driver_Lic_Attachment :
 			Driver_Lic_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(Driver_Lic_Attachment.filename)))
 			Driver_Lic_Attachment = "Yes"
+			Drive_License_Validity = (datetime.strptime(DLV,"%Y-%m").date() + relativedelta(day=31))
+		else:
+			Driver_Lic_Attachment = "No"
 		if Vaccination_Certi_Attachment :
 			Vaccination_Certi_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(Vaccination_Certi_Attachment.filename)))
 			Vaccination_Certi_Attachment = "Yes"
@@ -227,7 +272,7 @@ def driver():
 
 		print("S being printed")
 		print(S)
-
+		Drive_License_Validity = DLV
 		entry = employee(
 			Unique_ID = S , 
 			Date_of_Onboard= Date_of_Onboard,
@@ -254,20 +299,20 @@ def driver():
 		db.session.commit()
 
 
-		act_entry = activity(Unique_ID = S,Role = Role, BGV = 'No', Avaialbility = 'Yes', Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
+		act_entry = activity(Unique_ID = S,Role = Role, BGV = 'No', Avaialbility = 'No', Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
 		print(entry)
 		db.session.add(act_entry)
 		db.session.commit()
 
 		flash(Role +" added Successful")
 		return redirect(request.path,code=302)
-	return render_template("driver.html")
+	return render_template("driver.html", Transport=Tran)
 
 
 
  
  # update in shipment
-@app.route("/ajax_update",methods=['POST'])
+@app.route("/ajax_update",methods=['POST','GET'])
 def ajax_update():
 	print("cooollll")
 	msg = "yoo"
@@ -303,11 +348,11 @@ def ajax_update():
 
 
  # update in driver
-@app.route("/ajax_driver_update",methods=['POST'])
+@app.route("/ajax_driver_update",methods=['POST','GET'])
 def ajax_driver_update():
 	print("drive away")
 	if request.method == 'POST': 
-		msg = 'update done'
+		# msg = 'update done'
 		Unique_ID = request.form['Unique_ID']
 		Date_of_Onboard = request.form['Date_of_Onboard']
 		First_Name = request.form['First_Name']
@@ -343,8 +388,10 @@ def ajax_driver_update():
 		Driver_Lic_Attachment = request.form['Driver_Lic_Attachment']
 		Vaccination_Certi_Attachment = request.form['Vaccination_Certi_Attachment']
 		Photo_Attachment = request.form['Photo_Attachment']
+		# BGV = request.form['BGV']
+		# Blacklisted = request.form['Blacklisted']
 		print("Date_of_Onboard: ",Date_of_Onboard)
-
+		return redirect(request.path,code=302)
 		post = employee.query.filter_by(Unique_ID=Unique_ID).first()
 		if post:
 			print("ajax post")
@@ -364,13 +411,61 @@ def ajax_driver_update():
 			post.Driving_License_Type = Driving_License_Type
 			post.Drive_License_Validity = Drive_License_Validity
 			db.session.commit()
-			msg = 'Record successfully Updated'
+			flash('Record successfully Updated')
+			return redirect(request.path,code=302)
+			# return jsonify(msg)
 		else :
-			msg = 'shipment number is not changable'
+			flash('shipment number is not changable')
+			return redirect(request.path,code=302)
+
+
+	flash('update done')
+	return redirect(request.path,code=302)   
+
+
+
+
+
+ # update in shipment
+@app.route("/ajax_activity_update",methods=['POST','GET'])
+def ajax_activity_update():
+	print("cooollll")
+	msg = "yoo"
+	if request.method == 'POST': 
+		msg = 'update done'
+		Unique_ID = request.form['Unique_ID']
+		Role = request.form['Role']
+		BGV = request.form['BGV']
+		Avaialbility = request.form['Avaialbility']
+		Last_shipment_day = request.form['Last_shipment_day']
+		On_Shipment = request.form['On_Shipment']
+		Blacklisted = request.form['Blacklisted']
+		print(Unique_ID)
+		print(BGV)
+		print(Blacklisted)
+		print("yoo")
+		print(Avaialbility)
+		post = activity.query.filter_by(Unique_ID=Unique_ID).first()
+		if post:
+			print("ajax post")
+			print(post)
+			# post.Unique_ID = Unique_ID
+			# post.Role = Role
+			post.BGV = BGV
+			if BGV == 'Yes' and Blacklisted == 'No':
+				post.Avaialbility = 'Yes'
+			else:
+				post.Avaialbility = 'No'
+			# post.Last_shipment_day = Last_shipment_day
+			# post.On_Shipment = On_Shipment
+			post.Blacklisted = Blacklisted
+			db.session.commit()
 			return jsonify(msg)
-
-
+		else :
+			msg = 'Unique ID is not changable'
+			return jsonify(msg)
 	return jsonify(msg)   
+
 
 
 # shipment list
@@ -387,10 +482,19 @@ def ship_list():
 @app.route("/driver_list", methods= ["GET","POST"])
 def driver_list():
 	emp = employee.query.all()
-	print(emp)
 	if request.method == 'GET':
 		return render_template("driver_list.html", employee=emp)
 	return render_template("driver_list.html")	
+
+
+# activity list
+@app.route("/activity_list", methods= ["GET","POST"])
+def activity_list():
+	act = activity.query.all()
+	if request.method == 'GET':
+		return render_template("activity_list.html", activity=act)
+	return render_template("activity_list.html")	
+
 
 
 
@@ -453,7 +557,7 @@ def download_Driver_report():
 
 		idx = 0
 		print("olaa")
-		print(type(driver[1]))
+		# print(type(driver[1]))
 		print(act)
 		for row in driver:
 			print(row)
@@ -555,7 +659,7 @@ def download_Shipment_report():
 
 class shipment(db.Model):
 	print("hello")
-	Shipment_No  = db.Column(db.String(80), primary_key=True, nullable=False)
+	Shipment_No  = db.Column(db.String(20), primary_key=True, nullable=False)
 	Vehicle_No = db.Column(db.String(80), unique=True, nullable=False)
 	Shipment_Type = db.Column(db.String(80), unique=False, nullable=False)
 	Pilot_unique_ID = db.Column(db.String(80), unique=True, nullable=False)
@@ -577,9 +681,15 @@ class activity(db.Model):
 	Blacklisted = db.Column(db.String(80), unique=False, nullable=True)
 
 
+class transport(db.Model):
+	print("hello")
+	Transporter_ID  = db.Column(db.String(80), primary_key=True, nullable=False)
+	Transporter = db.Column(db.String(80), unique=False, nullable=True)
+	
+
 class employee(db.Model):
 	print("hello")
-	Unique_ID =  db.Column(db.String(80), primary_key=True, nullable=False, AUTO_INCREMENT=True)
+	Unique_ID =  db.Column(db.String(80), primary_key=True, nullable=False)
 	Date_of_Onboard = db.Column(db.String(80), primary_key=False, nullable=False)
 	First_Name = db.Column(db.String(80), primary_key=False, nullable=False)
 	Middle_Name = db.Column(db.String(80), primary_key=False, nullable=True)

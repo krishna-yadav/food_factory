@@ -53,10 +53,9 @@ $(document).ready(function () {
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
                                     <select class="form-group col-sm-8 flex-column d-flex" id="Transporter" name="Transporter" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10px" required>   
                                         <option value=""> </option>
-                                        <option value="DHL">  DHL</option>
-                                        <option value="RAPID">  RAPID</option>
-                                        <option value="NIDHI_TRUST">  NIDHI_TRUST</option>
-                                        <option value="Other">  Other</option>
+                                        {% for tran in Transport%}
+                                        <option value="{{tran.Transporter}}"> {{tran.Transporter}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
