@@ -310,6 +310,7 @@ def driver():
 
 
 
+
  
  # update in shipment
 @app.route("/ajax_update",methods=['POST','GET'])
@@ -318,103 +319,98 @@ def ajax_update():
 	msg = "yoo"
 	if request.method == 'POST': 
 		msg = 'update done'
-		ShipmentNo = request.form['Shipment_No']
-		Vehicle_No = request.form['Vehicle_No']
-		Shipment_Type = request.form['Shipment_Type']
-		Pilot_unique_ID = request.form['Pilot_unique_ID']
-		Copilot_unique_ID = request.form['Copilot_unique_ID']
-		Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
-		Transporter = request.form['Transporter']
+		field = request.form['field']
+		value = request.form['value']
+		editid = request.form['id']
 
-		post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
-		if post:
-			print("ajax post")
-			print(post)
-			# post.ShipmentNo = ShipmentNo
-			post.Vehicle_No = Vehicle_No
-			post.Shipment_Type = Shipment_Type
-			post.Pilot_unique_ID = Pilot_unique_ID
-			post.Copilot_unique_ID = Copilot_unique_ID
-			post.Dispatcher_unique_ID = Dispatcher_unique_ID
-			post.Transporter = Transporter
+		
+		try:
+			post = shipment.query.filter_by(Shipment_No=editid).first()
+			if field == 'Vehicle_No' :
+				post.Vehicle_No = value
+			elif field == 'Shipment_Type' :
+				post.Shipment_Type = value
+			elif field == 'Pilot_unique_ID' :
+				post.Pilot_unique_ID = value
+			elif field == 'Copilot_unique_ID' :
+				post.Copilot_unique_ID = value
+			elif field == 'Dispatcher_unique_ID' :
+				post.Dispatcher_unique_ID = value
+			elif field == 'Transporter' :
+				post.Transporter = value
+
 			db.session.commit()
 			msg = 'Record successfully Updated'
-		else :
+		except :
 			msg = 'shipment number is not changable'
 			return jsonify(msg)
+	return jsonify(msg)
 
-
-	return jsonify(msg)   
 
 
  # update in driver
 @app.route("/ajax_driver_update",methods=['POST','GET'])
 def ajax_driver_update():
 	print("drive away")
-	if request.method == 'POST': 
-		# msg = 'update done'
-		Unique_ID = request.form['Unique_ID']
-		Date_of_Onboard = request.form['Date_of_Onboard']
-		First_Name = request.form['First_Name']
-		Middle_Name = request.form['Middle_Name']
-		Last_Name = request.form['Last_Name']
-		Transporter = request.form['Transporter']
-		Role = request.form['Role']
-		Address_1 = request.form['Address_1']
-		Address_2 = request.form['Address_2']
-		City = request.form['City']
-		State = request.form['State']
-		Zip_Code = request.form['Zip_Code']
-		Mobile_No = request.form['Mobile_No']
-		DOB = request.form['DOB']
-		Emergency_Contact_Person = request.form['Emergency_Contact_Person']
-		Emergency_Contact_No = request.form['Emergency_Contact_No']
-		Blood_Group = request.form['Blood_Group']
-		Marital_Status = request.form['Marital_Status']
-		Spouse_Name = request.form['Spouse_Name']
-		No_of_Children = request.form['No_of_Children']
-		Aadhar_Number = request.form['Aadhar_Number']
-		PAN_Number = request.form['PAN_Number']
-		Driving_License_Number = request.form['Driving_License_Number']
-		Driving_License_Type = request.form['Driving_License_Type']
-		Drive_License_Validity = request.form['Drive_License_Validity']
-		Vaccination_Name = request.form['Vaccination_Name']
-		Dose1_Date = request.form['Dose1_Date']
-		Dose2_Date = request.form['Dose2_Date']
-		Booster_Dose_Date = request.form['Booster_Dose_Date']
-		Education_Qualification = request.form['Education_Qualification']
-		Aadhar_Attachment = request.form['Aadhar_Attachment']
-		PANCard_Attachment = request.form['PANCard_Attachment']
-		Driver_Lic_Attachment = request.form['Driver_Lic_Attachment']
-		Vaccination_Certi_Attachment = request.form['Vaccination_Certi_Attachment']
-		Photo_Attachment = request.form['Photo_Attachment']
-		# BGV = request.form['BGV']
-		# Blacklisted = request.form['Blacklisted']
-		print("Date_of_Onboard: ",Date_of_Onboard)
-		return redirect(request.path,code=302)
-		post = employee.query.filter_by(Unique_ID=Unique_ID).first()
-		if post:
-			print("ajax post")
-			print(post)
-			post.First_Name = First_Name
-			post.Middle_Name = Middle_Name
-			post.Last_Name = Last_Name
-			post.Transporter = Transporter
-			post.Role = Role
-			post.Address_1 = Address_1
-			post.Address_2 = Address_2
-			post.City = City
-			post.State = State
-			post.Zip_Code = Zip_Code
-			post.Mobile_No = Mobile_No
-			post.Driving_License_Number = Driving_License_Number
-			post.Driving_License_Type = Driving_License_Type
-			post.Drive_License_Validity = Drive_License_Validity
+	if request.method == 'POST':
+		field = request.form['field']
+		value = request.form['value']
+		editid = request.form['id']
+		
+		
+		try:
+			post = employee.query.filter_by(Unique_ID=Unique_ID).first()
+			if field == 'Date_of_Onboard' :
+				post.Date_of_Onboard = value
+			elif field == 'First_Name' :
+				post.First_Name = value
+			elif field == 'Middle_Name' :
+				post.Middle_Name = value
+			elif field == 'Last_Name' :
+				post.Last_Name = value
+			elif field == 'Transporter' :
+				post.Transporter = value
+			elif field == 'Role' :
+				post.Role = value
+			elif field == 'Address_1' :
+				post.Address_1 = value
+			elif field == 'Address_2' :
+				post.Address_2 = value
+			elif field == 'City' :
+				post.City = value
+			elif field == 'State' :
+				post.State = value
+			elif field == 'Zip_Code' :
+				post.Zip_Code = value
+			elif field == 'Mobile_No' :
+				post.Mobile_No = value
+			elif field == 'Emergency_Person' :
+				post.Emergency_Person = value
+			elif field == 'Emergency_Contact_No' :
+				post.Emergency_Contact_No = value
+			elif field == 'Spouse_Name' :
+				post.Spouse_Name = value
+			elif field == 'No_of_Children' :
+				post.No_of_Children = value
+			elif field == 'Driving_License_Number' :
+				post.Driving_License_Number = value
+			elif field == 'Driving_License_Type' :
+				post.Driving_License_Type = value
+			elif field == 'Drive_License_Validity' :
+				post.Drive_License_Validity = value
+			elif field == 'Vaccination_Name' :
+				post.Vaccination_Name = value
+			elif field == 'Dose1_Date' :
+				post.Dose1_Date = value
+			elif field == 'Dose2_Date' :
+				post.Dose2_Date = value
+			elif field == 'Booster_Dose_Date' :
+				post.Booster_Dose_Date = value
+
 			db.session.commit()
 			flash('Record successfully Updated')
 			return redirect(request.path,code=302)
-			# return jsonify(msg)
-		else :
+		except:
 			flash('shipment number is not changable')
 			return redirect(request.path,code=302)
 
@@ -423,48 +419,44 @@ def ajax_driver_update():
 	return redirect(request.path,code=302)   
 
 
-
-
-
- # update in shipment
-@app.route("/ajax_activity_update",methods=['POST','GET'])
+@app.route("/ajax_activity_update",methods=["POST","GET"])
 def ajax_activity_update():
-	print("cooollll")
-	msg = "yoo"
-	if request.method == 'POST': 
-		msg = 'update done'
-		Unique_ID = request.form['Unique_ID']
-		Role = request.form['Role']
-		BGV = request.form['BGV']
-		Avaialbility = request.form['Avaialbility']
-		Last_shipment_day = request.form['Last_shipment_day']
-		On_Shipment = request.form['On_Shipment']
-		Blacklisted = request.form['Blacklisted']
-		print(Unique_ID)
-		print(BGV)
-		print(Blacklisted)
-		print("yoo")
-		print(Avaialbility)
-		post = activity.query.filter_by(Unique_ID=Unique_ID).first()
-		if post:
-			print("ajax post")
-			print(post)
-			# post.Unique_ID = Unique_ID
-			# post.Role = Role
-			post.BGV = BGV
-			if BGV == 'Yes' and Blacklisted == 'No':
-				post.Avaialbility = 'Yes'
-			else:
-				post.Avaialbility = 'No'
-			# post.Last_shipment_day = Last_shipment_day
-			# post.On_Shipment = On_Shipment
-			post.Blacklisted = Blacklisted
-			db.session.commit()
-			return jsonify(msg)
-		else :
-			msg = 'Unique ID is not changable'
-			return jsonify(msg)
-	return jsonify(msg)   
+    try:
+        if request.method == 'POST':
+            field = request.form['field'] 
+            value = request.form['value']
+            editid = request.form['id']
+            
+            print(field)
+            print(value)
+            print(editid)
+            try:
+            	post = activity.query.filter_by(Unique_ID=editid).first()
+            	if field == 'Unique_ID' :
+            		post.Unique_ID = value
+            	elif field == 'BGV' :
+            		post.BGV = value
+            	elif field == 'Last_shipment_day' :
+            		post.Last_shipment_day = value
+            	elif field == 'On_Shipment' :
+            		post.On_Shipment = value
+            	elif field == 'Blacklisted' :
+            		post.Blacklisted = value
+
+            	if post.BGV == 'Yes' and post.Blacklisted == 'No':
+            		post.Avaialbility = 'Yes'
+            	else:
+            		post.Avaialbility = 'No'
+            except Exception as e:
+            	print(e)
+            	print("fool")
+
+            db.session.commit()
+
+            success = 1
+        return jsonify(success)
+    except Exception as e:
+        print(e)
 
 
 

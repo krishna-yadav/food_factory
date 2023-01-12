@@ -27,15 +27,15 @@
                         <th>State</th>
                         <th>Zip_Code</th>
                         <th>Phone</th>
-                        <th>DOB</th>
+                        <!-- <th>DOB</th> -->
                         <th>Emergency_Person</th>
                         <th>Emergency_Contact_No</th>
-                        <th>Blood_Group</th>
-                        <th>Marital_Status</th>
+                        <!-- <th>Blood_Group</th> -->
+                        <!-- <th>Marital_Status</th> -->
                         <th>Spouse_Name</th>
                         <th>No_of_Children</th>
-                        <th>Aadhar_Number</th>
-                        <th>PAN_Number</th>
+                        <!-- <th>Aadhar_Number</th> -->
+                        <!-- <th>PAN_Number</th> -->
                         <th>DL_No</th>
                         <th>DL_Type</th>
                         <th>DL_Date</th>
@@ -43,12 +43,12 @@
                         <th>Dose1_Date</th>
                         <th>Dose2_Date</th>
                         <th>Booster_Dose_Date</th>
-                        <th>Education_Qualification</th>
-                        <th>Aadhar_Attachment</th>
-                        <th>PANCard_Attachment</th>
-                        <th>Driver_Lic_Attachment</th>
-                        <th>Vaccination_Certi_Attachment</th>
-                        <th>Photo_Attachment</th>
+                        <!-- <th>Education_Qualification</th> -->
+                        <!-- <th>Aadhar_Attachment</th> -->
+                        <!-- <th>PANCard_Attachment</th> -->
+                        <!-- <th>Driver_Lic_Attachment</th> -->
+                        <!-- <th>Vaccination_Certi_Attachment</th> -->
+                        <!-- <th>Photo_Attachment</th> -->
                         <!-- <th>BGV</th>
                         <th>Blacklisted</th> -->
                         <th>Update</th>
@@ -58,47 +58,113 @@
                 <tbody>
                     {% for row in employee %}
                     <tr>
-                        <td>{{row.Unique_ID}}</td>
-                        <td>{{row.Date_of_Onboard}}</td>
-                        <td>{{row.First_Name}}</td>
-                        <td>{{row.Middle_Name}}</td>
-                        <td>{{row.Last_Name}}</td>
-                        <td>{{row.Transporter}}</td>
-                        <td>{{row.Role}}</td>
-                        <td>{{row.Address_1}}</td>
-                        <td>{{row.Address_2}}</td>
-                        <td>{{row.City}}</td>
-                        <td>{{row.State}}</td>
-                        <td>{{row.Zip_Code}}</td>
-                        <td>{{row.Mobile_No}}</td>
-                        <td>{{row.DOB}}</td>
-                        <td>{{row.Emergency_Contact_Person}}</td>
-                        <td>{{row.Emergency_Contact_No}}</td>
-                        <td>{{row.Blood_Group}}</td>
-                        <td>{{row.Marital_Status}}</td>
-                        <td>{{row.Spouse_Name}}</td>
-                        <td>{{row.No_of_Children}}</td>
-                        <td>{{row.Aadhar_Number}}</td>
-                        <td>{{row.PAN_Number}}</td>
-                        <td>{{row.Driving_License_Number}}</td>
-                        <td>{{row.Driving_License_Type}}</td>
-                        <td>{{row.Drive_License_Validity}}</td>
-                        <td>{{row.Vaccination_Name}}</td>
-                        <td>{{row.Dose1_Date}}</td>
-                        <td>{{row.Dose2_Date}}</td>
-                        <td>{{row.Booster_Dose_Date}}</td>
-                        <td>{{row.Education_Qualification}}</td>
-                        <td>{{row.Aadhar_Attachment}}</td>
-                        <td>{{row.PANCard_Attachment}}</td>
-                        <td>{{row.Driver_Lic_Attachment}}</td>
-                        <td>{{row.Vaccination_Certi_Attachment}}</td>
-                        <td>{{row.Photo_Attachment}}</td>
-                        
+                        <td><label type="text" id="Unique_ID " >{{row.Unique_ID}}</label></td>
+                        <td><label type="text" id="Unique_ID " >{{row.Date_of_Onboard}}</label></td>
                         <td>
-                            <a class="add" title="Add" data-toggle="tooltip pro" id="{{row.Unique_ID}}"><i class="material-icons">&#xE03B;</i></a>
-                            <a  class="edit" title="Edit" data-toggle="tooltip pro" id="{{row.Unique_ID}}"><i class="material-icons"> &#xE254;</i></a>
-                            <!-- <a class="delete" title="Delete" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons">&#xE872;</i></a> -->
+                            <div class='edit' > {{row.First_Name}}</div> 
+                            <input type='text' class='txtedit' value='{{row.First_Name}}' id='First_Name_{{row.Unique_ID}}' >
                         </td>
+                        <td>
+                            <div class='edit' > {{row.Middle_Name}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Middle_Name}}' id='Middle_Name_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Last_Name}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Last_Name}}' id='Last_Name_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Transporter}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Transporter}}' id='Transporter_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Role}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Role}}' id='Role_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Address_1}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Address_1}}' id='Address_1_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Address_2}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Address_2}}' id='Address_2_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.City}}</div> 
+                            <input type='text' class='txtedit' value='{{row.City}}' id='City_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Role}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Role}}' id='Role_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.State}}</div> 
+                            <input type='text' class='txtedit' value='{{row.State}}' id='State_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Zip_Code}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Zip_Code}}' id='Zip_Code_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Mobile_No}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Mobile_No}}' id='Mobile_No_{{row.Unique_ID}}' >
+                        </td>
+                        <!-- <td>
+                            <div class='edit' > {{row.DOB}}</div> 
+                            <input type='text' class='txtedit' value='{{row.DOB}}' id='DOB_{{row.Unique_ID}}' >
+                        </td> -->
+                        <!-- <td>
+                            <div class='edit' > {{row.Mobile_No}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Mobile_No}}' id='Mobile_No_{{row.Unique_ID}}' >
+                        </td> -->
+                        <td>
+                            <div class='edit' > {{row.Emergency_Contact_Person}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Emergency_Contact_Person}}' id='Emergency_Contact_Person_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Emergency_Contact_No}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Emergency_Contact_No}}' id='Emergency_Contact_No_{{row.Unique_ID}}' >
+                        </td>
+                        <!-- <td>
+                            <div class='edit' > {{row.Blood_Group}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Blood_Group}}' id='Blood_Group_{{row.Unique_ID}}' >
+                        </td> -->
+                        <td>
+                            <div class='edit' > {{row.Spouse_Name}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Spouse_Name}}' id='Spouse_Name_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.No_of_Children}}</div> 
+                            <input type='text' class='txtedit' value='{{row.No_of_Children}}' id='No_of_Children_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Driving_License_Number}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Driving_License_Number}}' id='Driving_License_Number_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Driving_License_Type}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Driving_License_Type}}' id='Driving_License_Type_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Drive_License_Validity}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Drive_License_Validity}}' id='Drive_License_Validity_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Vaccination_Name}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Vaccination_Name}}' id='Vaccination_Name_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Dose1_Date}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Dose1_Date}}' id='Dose1_Date_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Dose2_Date}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Dose2_Date}}' id='Dose2_Date_{{row.Unique_ID}}' >
+                        </td>
+                        <td>
+                            <div class='edit' > {{row.Booster_Dose_Date}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Booster_Dose_Date}}' id='Booster_Dose_Date_{{row.Unique_ID}}' >
+                        </td>
+                        
                     </tr>
                     {% endfor %}  
                 </tbody>
