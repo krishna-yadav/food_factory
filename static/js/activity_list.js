@@ -12,7 +12,7 @@ $(document).ready(function(){
    
   // Get edit id, field name and value
   var id = this.id;
-  var split_id = id.split("_");
+  var split_id = id.split(".");
   var field_name = split_id[0];
   var edit_id = split_id[1];
   var value = $(this).val();
@@ -25,7 +25,7 @@ $(document).ready(function(){
   $(this).prev('.edit').text(value);
  
   $.ajax({
-   url: '/update',
+   url: '/ajax_activity_update',
    type: 'post',
    data: { field:field_name, value:value, id:edit_id },
    success:function(response){

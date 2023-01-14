@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request , session ,jsonify,Response, flash, redirect
+from flask import Flask, render_template , request , session ,jsonify,Response, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -28,13 +28,23 @@ app.config['UPLOAD_FOLDER'] = params['UPLOAD_FOLDER']
 # pdyypnwmzcdebfbx
 
 
-@app.route("/dashboard")
-def dashboard():
-	print("hii")
-	return render_template("dashboard.html")
+
+# def create_ID(transporter,role,):
 
 
-	
+@app.route("/")
+def home():
+    user_id = request.cookies.get('YourSessionCookie')
+    if user_id:
+        user = database.get(user_id)
+        if user:
+            # Success!
+            return render_template('dashboard.html')
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
 
 
 # login page
@@ -46,7 +56,7 @@ def login():
 	if request.method == 'POST':
 		username = request.form['user']
 		password = request.form['pass']
-		if (username == 'admin' and password == 'admin'):
+		if (username == params['User'] and password == params['PWD']):
 			session['user'] = username
 
 			emp = employee.query.all()
@@ -60,11 +70,16 @@ def login():
 						db.session.commit()
 				except:
 					pass
-			return render_template("dashboard.html")
+			response = redirect(url_for("dashboard"))
+			response.set_cookie('YourSessionCookie', username)
+			return response
 		else :
-			return render_template("login.html",msg = "user or passwrod did not match")
+			flash("User or Password not correct", "error")
+			return render_template("login.html")
 
-	return render_template("login.html", msg = "")
+	return render_template("login.html")
+
+
 
 
 @app.route("/logout")
@@ -77,11 +92,23 @@ def logout():
 
 
 
+@app.route("/dashboard")
+def dashboard():
+	print("hii")
+	# user_id = request.cookies.get('YourSessionCookie')
+	# if params["User"] in user_id:
+	return render_template('dashboard.html')
+	# else:
+	# 	return redirect(url_for('login'))
+
+
+
+
 # shipment form
 @app.route("/shipment", methods = ['GET','POST'])
 def shipment():
-	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No',Avaialbility = 'Yes')
-	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No',Avaialbility = 'Yes')
+	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No',Avaialbility = 'Yes' , Active = 'Yes')
+	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No',Avaialbility = 'Yes', Active= 'Yes')
 	Transport = transport.query.all()
 	print("Driver")
 	print(Driver)
@@ -144,28 +171,48 @@ SNo = None
 # add ship end time
 @app.route("/end_ship", methods = ['POST','GET'])
 def end_ship():
+
+	
+
+
 	print("yuppiess")
 	global SNo
 	if request.method == 'POST':
 		SNo = request.form['sno']
 		print("post")
 		print(SNo)
-		if SNo:
-			post = shipment.query.filter_by(Shipment_No=SNo).first()
+		post = shipment.query.filter_by(Shipment_No=SNo).first()
+		if SNo and post:
+			# post = shipment.query.filter_by(Shipment_No=SNo).first()
 			post.End_Time = datetime.now()
 			return render_template("end_ship.html", shipment=post)
 		else:
 			SNo = 0
 			post = shipment.query.filter_by(Shipment_No=SNo).first()
 			# post.End_Time = datetime.now()
+			flash("Shipment number not correct")
 			return render_template("end_ship.html", shipment=post)
 
 	if request.method == 'GET':
 		print("get")
 		print(SNo)
 		if SNo:
+			print("yayuy")
 			post = shipment.query.filter_by(Shipment_No=SNo).first()
+
 			post.End_Time = datetime.now()
+			# db.session.commit()
+
+			p1 = activity.query.filter_by(Unique_ID = post.Pilot_unique_ID).first()
+			p1.On_Shipment = 'No'
+			p1.Last_shipment_date =  post.End_Time
+			p2 = activity.query.filter_by(Unique_ID = post.Copilot_unique_ID).first()
+			if p2 :
+				p2.On_Shipment = 'No'
+				p2.Last_shipment_date =  post.End_Time
+			d1 = activity.query.filter_by(Unique_ID = post.Dispatcher_unique_ID).first()
+			d1.On_Shipment = 'No'
+			d1.Last_shipment_date =  post.End_Time
 			db.session.commit()
 			SNo = 0
 
@@ -177,8 +224,16 @@ def end_ship():
 			post = shipment.query.filter_by(Shipment_No=SNo).first()
 			print(post)
 			# post.End_Time = datetime.now()
+			# flash("Shipment number not correct")
 			return render_template("end_ship.html", shipment=post)
 
+	print("hola")
+	SNo = 0
+	post = shipment.query.filter_by(Shipment_No=SNo).first()
+	print(post)
+	# post.End_Time = datetime.now()
+	# flash("Shipment number not correct")
+	return render_template("end_ship.html", shipment=post)
 
 
 # driver form
@@ -234,8 +289,8 @@ def driver():
 				uni_code = a
 		tran = transport.query.filter_by(Transporter = Transporter).first()
 
-		print(tran.Transporter_ID )
-		print(uni_code)
+		# print(tran.Transporter_ID )
+		# print(uni_code)
 		uni_code += 1 
 		print("uni_code")
 		print(uni_code)
@@ -269,6 +324,7 @@ def driver():
 		if Photo_Attachment :
 			Photo_Attachment.save(join(app.config['UPLOAD_FOLDER'] +'\\'+S, secure_filename(Photo_Attachment.filename)))
 			Photo_Attachment = "Yes"
+		
 
 		print("S being printed")
 		print(S)
@@ -299,7 +355,7 @@ def driver():
 		db.session.commit()
 
 
-		act_entry = activity(Unique_ID = S,Role = Role, BGV = 'No', Avaialbility = 'No', Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
+		act_entry = activity(Unique_ID = S,Role = Role, BGV = 'No', Active = 'Yes', Avaialbility = 'No', Last_shipment_date = datetime.now(), Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
 		print(entry)
 		db.session.add(act_entry)
 		db.session.commit()
@@ -349,17 +405,20 @@ def ajax_update():
 
 
  # update in driver
-@app.route("/ajax_driver_update",methods=['POST','GET'])
+@app.route("/ajax_driver_update",methods=['POST'])
 def ajax_driver_update():
 	print("drive away")
 	if request.method == 'POST':
 		field = request.form['field']
 		value = request.form['value']
 		editid = request.form['id']
-		
+
+		print(field)
+		print(value)
+		print(editid)
 		
 		try:
-			post = employee.query.filter_by(Unique_ID=Unique_ID).first()
+			post = employee.query.filter_by(Unique_ID=editid).first()
 			if field == 'Date_of_Onboard' :
 				post.Date_of_Onboard = value
 			elif field == 'First_Name' :
@@ -370,6 +429,11 @@ def ajax_driver_update():
 				post.Last_Name = value
 			elif field == 'Transporter' :
 				post.Transporter = value
+				# tran = transport.query.filter_by(Transporter=value).first()
+				# if tran :
+				# 	post.Transporter = value
+				# 	new = employee.query.filter_by(Unique_ID=editid).first()
+				# 	new.Unique_ID = 
 			elif field == 'Role' :
 				post.Role = value
 			elif field == 'Address_1' :
@@ -408,15 +472,11 @@ def ajax_driver_update():
 				post.Booster_Dose_Date = value
 
 			db.session.commit()
-			flash('Record successfully Updated')
-			return redirect(request.path,code=302)
-		except:
-			flash('shipment number is not changable')
-			return redirect(request.path,code=302)
-
-
-	flash('update done')
-	return redirect(request.path,code=302)   
+			success = 1
+			return jsonify(success)
+		except Exception as e:
+			print(e)
+   
 
 
 @app.route("/ajax_activity_update",methods=["POST","GET"])
@@ -432,14 +492,10 @@ def ajax_activity_update():
             print(editid)
             try:
             	post = activity.query.filter_by(Unique_ID=editid).first()
-            	if field == 'Unique_ID' :
-            		post.Unique_ID = value
-            	elif field == 'BGV' :
+            	if field == 'BGV' :
             		post.BGV = value
-            	elif field == 'Last_shipment_day' :
-            		post.Last_shipment_day = value
-            	elif field == 'On_Shipment' :
-            		post.On_Shipment = value
+            	elif field == 'Active' :
+            		post.Active = value
             	elif field == 'Blacklisted' :
             		post.Blacklisted = value
 
@@ -483,6 +539,15 @@ def driver_list():
 @app.route("/activity_list", methods= ["GET","POST"])
 def activity_list():
 	act = activity.query.all()
+
+	for u in act :
+		if u.On_Shipment == 'No' :
+			ship_date = datetime.strptime(u.Last_shipment_date,'%m/%d/%Y').date()
+			delta = datetime.now() - ship_date
+			u.Last_shipment_day = delta.days
+
+
+
 	if request.method == 'GET':
 		return render_template("activity_list.html", activity=act)
 	return render_template("activity_list.html")	
@@ -541,10 +606,12 @@ def download_Driver_report():
 		sh.write( 0,33,'Vaccination_Certi_Attachment')
 		sh.write( 0,34,'Photo_Attachment')
 		sh.write( 0,35,'BGV')
-		sh.write( 0,36,'Avaialbility')
-		sh.write( 0,37,'Last_shipment_day')
-		sh.write( 0,38,'On_Shipment')
-		sh.write( 0,39,'Blacklisted')
+		sh.write( 0,36,'Active')
+		sh.write( 0,37,'Avaialbility')
+		sh.write( 0,38,'Last_shipment_date')
+		sh.write( 0,39,'Last_shipment_day')
+		sh.write( 0,40,'On_Shipment')
+		sh.write( 0,41,'Blacklisted')
 
 
 		idx = 0
@@ -590,10 +657,12 @@ def download_Driver_report():
 			sh.write(idx+1,34, str(row.Photo_Attachment))
 			act = activity.query.filter_by(Unique_ID = row.Unique_ID).first()
 			sh.write(idx+1,35, str(act.BGV))
-			sh.write(idx+1,36, str(act.Avaialbility))
-			sh.write(idx+1,37, str(act.Last_shipment_day))
-			sh.write(idx+1,38, str(act.On_Shipment))
-			sh.write(idx+1,39, str(act.Blacklisted))
+			sh.write(idx+1,36, str(act.Active))
+			sh.write(idx+1,37, str(act.Avaialbility))
+			sh.write(idx+1,38, str(act.Last_shipment_date))
+			sh.write(idx+1,39, str(act.Last_shipment_day))
+			sh.write(idx+1,40, str(act.On_Shipment))
+			sh.write(idx+1,41, str(act.Blacklisted))
 			idx += 1
 
 		WORKBOOK.save(output)
@@ -667,7 +736,9 @@ class activity(db.Model):
 	Unique_ID   = db.Column(db.String(80), primary_key=True, nullable=False)
 	Role = db.Column(db.String(10), unique=False, nullable=True)
 	BGV = db.Column(db.String(10), unique=False, nullable=True)
+	Active = db.Column(db.String(10), unique=False, nullable=True)
 	Avaialbility = db.Column(db.String(10), unique=False, nullable=True)
+	Last_shipment_date = db.Column(db.String(120), unique=False, nullable=True)
 	Last_shipment_day = db.Column(db.String(120), unique=False, nullable=True)
 	On_Shipment = db.Column(db.String(80), unique=False, nullable=True)
 	Blacklisted = db.Column(db.String(80), unique=False, nullable=True)

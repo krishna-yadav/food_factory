@@ -13,7 +13,7 @@ $(document).ready(function () {
 //     });
 // });
 </script>
-     
+
            
         <div class="container-fluid px-1 py-40 mx-auto">
             <div class="row d-flex justify-content-center">
@@ -22,6 +22,16 @@ $(document).ready(function () {
                     <!-- <h3>Domino's Venture</h3> -->
 
                     <br>
+
+
+                    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <h class="{{ category }}" style="display:none;width:100%;margin-top:10px;">{{ message }}</h>
+                                
+                        {% endfor %}
+                        {% endif %}
+                      {% endwith %} -->
 
                     <form class="form-card"  action = "/end_ship" method = "POST">
                             <div class="row justify-content-between text-left">

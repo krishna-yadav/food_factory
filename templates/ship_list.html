@@ -24,7 +24,6 @@
                         <th>pilot2_unique_ID</th>
                         <th>Dispatcher_unique_ID</th>
                         <th>Transporter</th>
-                        <th>Update</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,38 +33,29 @@
                         <!-- <td><label type="text" id="Vehicle_No" >{{row.Vehicle_No}}</label></td> -->
                         <td>
                             <div class='edit' > {{row.Vehicle_No}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Vehicle_No}}' id='Vehicle_No_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Vehicle_No}}' id='Vehicle_No.{{row.Unique_ID}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Shipment_Type}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Shipment_Type}}' id='Shipment_Type_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Shipment_Type}}' id='Shipment_Type.{{row.Unique_ID}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Pilot_unique_ID}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Pilot_unique_ID}}' id='Pilot_unique_ID_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Pilot_unique_ID}}' id='Pilot_unique_ID.{{row.Unique_ID}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Copilot_unique_ID}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Copilot_unique_ID}}' id='Copilot_unique_ID_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Copilot_unique_ID}}' id='Copilot_unique_ID.{{row.Unique_ID}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Dispatcher_unique_ID}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Dispatcher_unique_ID}}' id='Dispatcher_unique_ID_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Dispatcher_unique_ID}}' id='Dispatcher_unique_ID.{{row.Unique_ID}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Transporter}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Transporter}}' id='Transporter_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Transporter}}' id='Transporter.{{row.Unique_ID}}' >
                         </td>
-                        <!-- <td><label type="text" id="Shipment_Type" >{{row.Shipment_Type}}</label></td>
-                        <td><label type="text" id="Pilot_unique_ID" >{{row.Pilot_unique_ID}}</label></td>
-                        <td><label type="text" id="Copilot_unique_ID" >{{row.Copilot_unique_ID}}</label></td>
-                        <td><label type="text" id="Dispatcher_unique_ID" >{{row.Dispatcher_unique_ID}}</label></td>
-                        <td><label type="text" id="Transporter" >{{row.Transporter}}</label></td> -->
-                        <!-- <td>
-                            
-                            <a  class="edit" title="Edit" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons"> &#xE254;</i></a>
-                            <a class="add" title="Add" data-toggle="tooltip" id="{{row.Shipment_No}}"><i class="material-icons">&#xE03B;</i></a>
-                        </td> -->
+                        
                     </tr>
                     {% endfor %}    
                 </tbody>
@@ -74,9 +64,7 @@
         </div>
     </div>
 </div>     
-            <!-- <div class="table"></div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <div class="table"></div><br> -->
+            
 
 
 {% endblock %}

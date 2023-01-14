@@ -9,7 +9,7 @@
                 <div class="row ">
                     <div class="col-sm-8"><h2>Availablity <b>Details</b></h2></div>
                     <div class="col-sm-4">
-                        <!-- <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button> -->
+                       
                     </div>
                     <div class='btn btn-info' id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
                 </div>
@@ -18,13 +18,13 @@
                 <thead>
                     <tr>
                         <th>Unique_ID </th>
-                        <!-- <th>Role</th> -->
                         <th>BGV</th>
+                        <th>Acitve</th>
                         <th>Avaialbility</th>
+                        <th>Last_shipment_date</th>
                         <th>Last_shipment_day</th>
                         <th>On_Shipment</th>
                         <th>Blacklisted</th>
-                        <!-- <th>Update</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -34,38 +34,24 @@
                         <td><label type="text" id="Unique_ID " >{{row.Unique_ID}}</label></td>
                         <td>
                             <div class='edit' > {{row.BGV}}</div> 
-                            <input type='text' class='txtedit' value='{{row.BGV}}' id='BGV_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.BGV}}' id='BGV.{{row.Unique_ID}}' >
                         </td>
-                        <td><label type="text" id="Unique_ID " >{{row.Avaialbility}}</label></td>
-                        <td><label type="text" id="Unique_ID " >{{row.Last_shipment_day}}</label></td>
-                        <!-- <td>
-                            <div class='edit' > {{row.Last_shipment_day}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Last_shipment_day}}' id='Last_shipment_day_{{row.Unique_ID}}' >
-                        </td> -->
-                        <td><label type="text" id="Unique_ID " > {{row.On_Shipment}}</label></td>
+                        <td>
+                            <div class='edit' > {{row.Active}}</div> 
+                            <input type='text' class='txtedit' value='{{row.Active}}' id='Active_{{row.Unique_ID}}' >
+                        </td>
+                        <td><label type="text" id="Avaialbility " >{{row.Avaialbility}}</label></td>
+                        <td><label type="text" id="Last_shipment_date " >{{row.Last_shipment_date}}</label></td>
+                        <td><label type="text" id="Last_shipment_day " >{{row.Last_shipment_day}}</label></td>
+                        <td><label type="text" id="On_Shipment " > {{row.On_Shipment}}</label></td>
                         <td>
                             <div class='edit' > {{row.Blacklisted}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Blacklisted}}' id='Blacklisted_{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Blacklisted}}' id='Blacklisted.{{row.Unique_ID}}' >
                         </td>
                     </tr>
 
-
-
-
-                    <!-- <tr>
-                        <td><label type="text" id="Unique_ID " >{{row.Unique_ID }}</label></td>
-                        <td><label type="text" id="Role" >{{row.Role}}</label></td>
-                        <td><label type="text" id="BGV" >{{row.BGV}}</label></td>
-                        <td><label type="text" id="Avaialbility" >{{row.Avaialbility}}</label></td>
-                        <td><label type="text" id="Last_shipment_day" >{{row.Last_shipment_day}}</label></td>
-                        <td><label type="text" id="On_Shipment" >{{row.On_Shipment}}</label></td>
-                        <td><label type="text" id="Blacklisted" >{{row.Blacklisted}}</label></td>
-                        <td>
-                            
-                            <a  class="edit" title="Edit" data-toggle="tooltip" id="{{row.Unique_ID}}"><i class="material-icons"> &#xE254;</i></a>
-                            <a class="add" title="Add" data-toggle="tooltip" id="{{row.Unique_ID}}"><i class="material-icons">&#xE03B;</i></a>
                         </td>
-                    </tr> -->
+                    </tr> 
                     {% endfor %}    
                 </tbody>
             </table>
@@ -73,10 +59,7 @@
         </div>
     </div>
 </div>     
-            <!-- <div class="table"></div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <div class="table"></div><br> -->
-
+           
 
 {% endblock %}
 

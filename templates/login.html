@@ -13,6 +13,15 @@
     
 <main class="container-fluid form-signin w-100 m-auto">
 
+<div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+  <h class="{{ category }}">{{ message }}</h>
+    {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
   <form action = "/login" method = "POST">
     <img class="mb-4" src="{{url_for('static', filename= 'images/1.jpg') }}" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">LogIn Account</h1>
