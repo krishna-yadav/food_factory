@@ -10,6 +10,8 @@ import xlwt
 import json
 
 
+# http://localhost:8080/phpmyadmin/
+
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
 
@@ -27,8 +29,6 @@ app.config['UPLOAD_FOLDER'] = params['UPLOAD_FOLDER']
 
 # pdyypnwmzcdebfbx
 
-
-
 # def create_ID(transporter,role,):
 
 
@@ -36,7 +36,7 @@ app.config['UPLOAD_FOLDER'] = params['UPLOAD_FOLDER']
 def home():
     user_id = request.cookies.get('YourSessionCookie')
     if user_id:
-        user = database.get(user_id)
+        user = params['User']
         if user:
             # Success!
             return render_template('dashboard.html')
@@ -50,15 +50,12 @@ def home():
 # login page
 @app.route("/login", methods = ['GET','POST'])
 def login():
-	# if ('user' in session and session['user'] == 'admin'):
-	# 	return render_template("dashboard.html")
 	msg = "user or passwrod did not match"
 	if request.method == 'POST':
 		username = request.form['user']
 		password = request.form['pass']
 		if (username == params['User'] and password == params['PWD']):
 			session['user'] = username
-
 			emp = employee.query.all()
 			for i in emp :
 				try :
@@ -94,12 +91,13 @@ def logout():
 
 @app.route("/dashboard")
 def dashboard():
-	print("hii")
-	# user_id = request.cookies.get('YourSessionCookie')
-	# if params["User"] in user_id:
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	return render_template('dashboard.html')
-	# else:
-	# 	return redirect(url_for('login'))
+	
 
 
 
@@ -107,6 +105,12 @@ def dashboard():
 # shipment form
 @app.route("/shipment", methods = ['GET','POST'])
 def shipment():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
+
 	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No',Avaialbility = 'Yes' , Active = 'Yes')
 	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No',Avaialbility = 'Yes', Active= 'Yes')
 	Transport = transport.query.all()
@@ -171,10 +175,11 @@ SNo = None
 # add ship end time
 @app.route("/end_ship", methods = ['POST','GET'])
 def end_ship():
-
-	
-
-
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	print("yuppiess")
 	global SNo
 	if request.method == 'POST':
@@ -239,6 +244,11 @@ def end_ship():
 # driver form
 @app.route("/driver", methods = ['GET','POST'])
 def driver():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	print("uuuuu")
 	Tran = transport.query.all()
 	if request.method == 'POST':
@@ -519,6 +529,11 @@ def ajax_activity_update():
 # shipment list
 @app.route("/ship_list", methods= ["GET","POST"])
 def ship_list():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	ships = shipment.query.all()
 	print(ships)
 	if request.method == 'GET':
@@ -529,6 +544,11 @@ def ship_list():
 # driver list
 @app.route("/driver_list", methods= ["GET","POST"])
 def driver_list():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	emp = employee.query.all()
 	if request.method == 'GET':
 		return render_template("driver_list.html", employee=emp)
@@ -538,6 +558,11 @@ def driver_list():
 # activity list
 @app.route("/activity_list", methods= ["GET","POST"])
 def activity_list():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	act = activity.query.all()
 
 	for u in act :
@@ -559,6 +584,11 @@ def activity_list():
 # download_driver_report
 @app.route("/download/driver_report/pdf" , methods=["GET","POST"])
 def download_Driver_report():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	if request.method == 'GET':
 		driver = employee.query.all()
 		act = activity.query.all()
@@ -678,6 +708,11 @@ def download_Driver_report():
 # download_ship_report
 @app.route("/download/ship_report/pdf" , methods=["GET","POST"])
 def download_Shipment_report():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
 	if request.method == 'GET':
 		ships = shipment.query.all()
 

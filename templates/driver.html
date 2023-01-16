@@ -80,7 +80,7 @@ $(document).ready(function () {
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">State/Region/Province<span class="text-danger"> *</span></label> <input type="text" id="State" name="State" placeholder="" onblur="valid(9)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Postal / Zip Code<span class="text-danger"> *</span></label> <input type="text" id="Zip_Code" name="Zip_Code" placeholder="" onblur="valid(10)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Postal / Zip Code<span class="text-danger"> *</span></label> <input type="text" id="Zip_Code" name="Zip_Code" placeholder="" onblur="valid(10)" required minlength="6" maxlength="6"> </div>
                                 
                             </div>
                             <div class="row justify-content-between text-left">
@@ -103,8 +103,8 @@ $(document).ready(function () {
                             </div>
                             
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Blood Group<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Blood_Group" name="Blood_Group" placeholder="Blood Group " onblur="valid(15)" style="padding-top: 10px" required>   
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Blood Group</label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Blood_Group" name="Blood_Group" placeholder="Blood Group " onblur="valid(15)" style="padding-top: 10px">   
                                         <option value=""> </option>
                                         <option value="A+">  A+</option>
                                         <option value="A-">  A-</option>
