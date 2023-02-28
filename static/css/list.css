@@ -115,6 +115,7 @@ table.table td .add {
     display: none;
 }
 .scrollit {
+    
     overflow:scroll;
     /*height:100px;
     width: 100px;*/

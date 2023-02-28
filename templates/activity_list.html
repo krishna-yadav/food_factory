@@ -17,6 +17,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>Action</th>
                         <th>Unique_ID </th>
                         <th>BGV</th>
                         <th>Acitve</th>
@@ -30,28 +31,83 @@
                 <tbody>
                     {% for row in activity %}
                     <tr>
+                        <td>
+                                <a href="/update_act/{{row.Unique_ID}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                                    data-target="#modaledit{{row.Unique_ID}}">Edit</a>
+                                <!-- <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a> -->
+                            </td>
 
                         <td><label type="text" id="Unique_ID " >{{row.Unique_ID}}</label></td>
-                        <td>
-                            <div class='edit' > {{row.BGV}}</div> 
-                            <input type='text' class='txtedit' value='{{row.BGV}}' id='BGV.{{row.Unique_ID}}' >
-                        </td>
-                        <td>
-                            <div class='edit' > {{row.Active}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Active}}' id='Active_{{row.Unique_ID}}' >
-                        </td>
+                        <td><label type="text" id="BGV " >{{row.BGV}}</label></td>
+                        <td><label type="text" id="Active " >{{row.Active}}</label></td>
                         <td><label type="text" id="Avaialbility " >{{row.Avaialbility}}</label></td>
                         <td><label type="text" id="Last_shipment_date " >{{row.Last_shipment_date}}</label></td>
                         <td><label type="text" id="Last_shipment_day " >{{row.Last_shipment_day}}</label></td>
                         <td><label type="text" id="On_Shipment " > {{row.On_Shipment}}</label></td>
-                        <td>
-                            <div class='edit' > {{row.Blacklisted}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Blacklisted}}' id='Blacklisted.{{row.Unique_ID}}' >
-                        </td>
-                    </tr>
-
-                        </td>
+                        <td><label type="text" id="Blacklisted " >{{row.Blacklisted}}</label></td>
+                        
+                    
                     </tr> 
+
+
+                    <div id="modaledit{{row.Unique_ID}}" class="modal fade" style="margin-top: 10px;" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Update Information</h4>
+                                    </div>
+                                    <!-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        </div> -->
+                                    <div class="modal-body change">
+                                        <form action="/update_act/{{row.Unique_ID}}" method="POST">
+                                            <div class="form-group">
+                                                <label>BGV:</label>
+                                                <input type="hidden" name="id" value="{{row.Unique_ID}}">
+                                                <select class="form-group col-sm-8 flex-column d-flex" id="BGV" name="BGV" placeholder="BGV" onblur="valid(4)" style="padding-top: 10px" >   
+                                                    <option value="{{row.BGV}}" >{{row.BGV}} </option>
+                                                    <option value="Yes"> Yes </option>
+                                                    <option value="No"> No </option>
+                                                </select>
+
+                                                </div>
+                                            <div class="form-group">
+                                                <label>Acitve:</label>
+                                                <input type="hidden" name="id" value="{{row.Unique_ID}}">
+                                                <select class="form-group col-sm-8 flex-column d-flex" id="Acitve" name="Acitve" placeholder="Acitve" onblur="valid(4)" style="padding-top: 10px">   
+                                                    <option value="{{row.Acitve}}">{{row.Acitve}} </option>
+                                                    <option value="Yes"> Yes </option>
+                                                    <option value="No"> No </option>
+                                                    </select>
+
+                                                </div>
+
+
+                                            <div class="form-group">
+                                                <label>Blacklisted:</label>
+                                                <input type="hidden" name="id" value="{{row.Unique_ID}}">
+                                                <select class="form-group col-sm-8 flex-column d-flex" id="Blacklisted" name="Blacklisted" placeholder="Blacklisted" onblur="valid(4)" style="padding-top: 10px">   
+                                                    <option value="{{row.Blacklisted}}">{{row.Blacklisted}} </option>
+                                                    <option value="Yes"> Yes </option>
+                                                    <option value="No"> No </option>
+                                                    </select>
+
+                                                </div>
+                                    <div class="form-group">
+                                                <button class="btn btn-primary" value="Update Name"
+                                                    type="submit">Update</button>
+                                                </div>
+                                            
+                                        </form>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                     {% endfor %}    
                 </tbody>
             </table>
@@ -63,7 +119,7 @@
 
 {% endblock %}
 
-
+<!-- 
 {% block footer %}
     <script type="text/javascript" src="{{url_for('static', filename= 'js/activity_list.js') }}" > </script>
-{% endblock %}
+{% endblock %} -->

@@ -12,6 +12,7 @@ import json
 
 # http://localhost:8080/phpmyadmin/
 
+
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
 
@@ -32,6 +33,22 @@ app.config['UPLOAD_FOLDER'] = params['UPLOAD_FOLDER']
 # def create_ID(transporter,role,):
 
 
+# def shipment_days_count():
+# 	emp = activity.query.all()
+# 	print(emp)
+# 	for i in emp :
+# 		try :
+# 			# if i.Drive_License_Validity is not '0000-00-00':
+# 			if  i.Last_shipment_day > 15:
+# 				act = activity.query.filter_by(Unique_ID =  i.Unique_ID).first()
+# 				act.Avaialbility= 'No'
+# 				act.Active= 'No'
+# 				db.session.commit()
+# 		except:
+# 			pass 
+
+
+
 @app.route("/")
 def home():
     user_id = request.cookies.get('YourSessionCookie')
@@ -49,6 +66,7 @@ def home():
 
 # login page
 @app.route("/login", methods = ['GET','POST'])
+
 def login():
 	msg = "user or passwrod did not match"
 	if request.method == 'POST':
@@ -99,6 +117,23 @@ def dashboard():
 	return render_template('dashboard.html')
 	
 
+@app.route("/ship", methods = ['GET','POST'])
+def ship():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
+	Transport = transport.query.all()
+
+	if request.method == 'POST':
+		Transporter = request.form['Transporter']
+		print("hi")
+		print(Transporter)
+		Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No',Avaialbility = 'Yes' , Active = 'Yes')
+		Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No',Avaialbility = 'Yes', Active= 'Yes')
+		return render_template("shipment.html" , Driver=Driver , Dispatcher=Dispatcher  , Transporter =Transporter)
+	return render_template("ship.html", Transport =Transport)
 
 
 
@@ -113,11 +148,12 @@ def shipment():
 
 	Driver = activity.query.filter_by(Role='Driver', On_Shipment = 'No',Avaialbility = 'Yes' , Active = 'Yes')
 	Dispatcher = activity.query.filter_by(Role='Dispatcher', On_Shipment = 'No',Avaialbility = 'Yes', Active= 'Yes')
-	Transport = transport.query.all()
+	# Transport = transport.query.all()
 	print("Driver")
 	print(Driver)
 
 	if request.method == 'POST':
+		print("yoyo")
 		s= []
 		ShipmentNo = request.form['Shipment_No']
 		Vehicle_No = request.form['Vehicle_No']
@@ -125,10 +161,11 @@ def shipment():
 		Pilot_unique_ID = request.form['Pilot_unique_ID']
 		Copilot_unique_ID = request.form['Copilot_unique_ID']
 		Dispatcher_unique_ID = request.form['Dispatcher_unique_ID']
-		Transporter = request.form['Transporter']
+		# Transporter = request.form['Transporter']
 
 
 		post = shipment.query.filter_by(Shipment_No=ShipmentNo).first()
+		veh = shipment.query.filter_by(Vehicle_No=Vehicle_No).first()
 
 		if Copilot_unique_ID :
 			s.append(Pilot_unique_ID)
@@ -142,6 +179,9 @@ def shipment():
 
 		if post :
 			flash("Shipment number already exist", "error")
+			return redirect(request.path,code=302) 
+		elif veh :
+			flash("vehicle number already exist", "error")
 			return redirect(request.path,code=302) 
 		else:
 			print("Shipment_Type")
@@ -165,7 +205,7 @@ def shipment():
 				db.session.commit()
 			flash("Shipping Successful")
 			return redirect(request.path,code=302) 
-	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher , Transport =Transport)
+	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher )
 
 
 SNo = None
@@ -220,8 +260,8 @@ def end_ship():
 			d1.Last_shipment_date =  post.End_Time
 			db.session.commit()
 			SNo = 0
-
-			return render_template("end_ship.html", shipment=post)
+			flash("Shipment ended")
+			return redirect(request.path,code=302)
 		
 		else:
 			print("hola")
@@ -289,7 +329,7 @@ def driver():
 		Driver_Lic_Attachment = request.files['Driver_Lic_Attachment']
 		Vaccination_Certi_Attachment = request.files['Vaccination_Certi_Attachment']
 		Photo_Attachment = request.files['Photo_Attachment']
-
+		print(DLV)
 		
 		obj = employee.query.all()
 		uni_code = 0
@@ -315,30 +355,39 @@ def driver():
 		print(user_folder)
 		os.makedirs(user_folder)
 		if Aadhar_Attachment :
+			Aadhar_Attachment.filename = First_Name+"Aadhar.jpg"
 			Aadhar_Attachment.save(join(user_folder, secure_filename(Aadhar_Attachment.filename)))
+			print(Aadhar_Attachment.filename)
 			Aadhar_Attachment = "Yes"
 		if PANCard_Attachment :
+			PANCard_Attachment.filename = First_Name+"PAN.jpg"
 			PANCard_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(PANCard_Attachment.filename)))
 			PANCard_Attachment = "Yes"
 		else:
 			PANCard_Attachment = "No"
 		if Driver_Lic_Attachment :
+			Driver_Lic_Attachment.filename = First_Name+"Driver_Lic.jpg"
 			Driver_Lic_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(Driver_Lic_Attachment.filename)))
 			Driver_Lic_Attachment = "Yes"
 			Drive_License_Validity = (datetime.strptime(DLV,"%Y-%m").date() + relativedelta(day=31))
+			print("YOODFD")
+			print(Drive_License_Validity)
 		else:
 			Driver_Lic_Attachment = "No"
+			Drive_License_Validity = DLV
 		if Vaccination_Certi_Attachment :
+			Vaccination_Certi_Attachment.filename = First_Name+"Vaccination_Certi.jpg"
 			Vaccination_Certi_Attachment.save(join(app.config['UPLOAD_FOLDER']+'\\'+S, secure_filename(Vaccination_Certi_Attachment.filename)))
 			Vaccination_Certi_Attachment = "Yes"
 		if Photo_Attachment :
+			Photo_Attachment.filename = First_Name+"Photo.jpg"
 			Photo_Attachment.save(join(app.config['UPLOAD_FOLDER'] +'\\'+S, secure_filename(Photo_Attachment.filename)))
 			Photo_Attachment = "Yes"
 		
 
 		print("S being printed")
 		print(S)
-		Drive_License_Validity = DLV
+		# Drive_License_Validity = DLV
 		entry = employee(
 			Unique_ID = S , 
 			Date_of_Onboard= Date_of_Onboard,
@@ -365,7 +414,7 @@ def driver():
 		db.session.commit()
 
 
-		act_entry = activity(Unique_ID = S,Role = Role, BGV = 'No', Active = 'Yes', Avaialbility = 'No', Last_shipment_date = datetime.now(), Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
+		act_entry = activity(Unique_ID = S,Role = Role, Transporter = Transporter, BGV = 'No', Active = 'Yes', Avaialbility = 'No', Last_shipment_date = datetime.now(), Last_shipment_day = '', On_Shipment = 'No', Blacklisted = 'No')
 		print(entry)
 		db.session.add(act_entry)
 		db.session.commit()
@@ -377,152 +426,88 @@ def driver():
 
 
 
- 
- # update in shipment
-@app.route("/ajax_update",methods=['POST','GET'])
-def ajax_update():
-	print("cooollll")
-	msg = "yoo"
-	if request.method == 'POST': 
-		msg = 'update done'
-		field = request.form['field']
-		value = request.form['value']
-		editid = request.form['id']
+# update in driver
+@app.route('/update/<Unique_ID>',methods=['POST','GET'])
+def update(Unique_ID):
+	row=employee.query.filter_by(Unique_ID=Unique_ID).first()
+	print(row)
+	if request.method=='POST':
+		row.First_Name=request.form['name']
+		row.Middle_Name=request.form['mname']
+		row.Last_Name=request.form['lname']
+		row.Transporter=request.form['transp']
+		row.Role=request.form['role']
+		row.Address_1=request.form['a1']
+		row.Address_2=request.form['a2']
+		row.City=request.form['city']
+		row.State=request.form['state']
+		row.Zip_Code=request.form['zipc']
+		row.Mobile_No=request.form['mno']
+		row.Emergency_Contact_Person=request.form['ecop']
+		row.Emergency_Contact_No=request.form['eco']
+		row.Marital_Status=request.form['ms']
+		row.Spouse_Name=request.form['spn']
+		row.No_of_Children=request.form['noc']
+		row.Aadhar_Number=request.form['aadhar']
+		row.PAN_Number=request.form['pan']
+		row.Driving_License_Number=request.form['dlno']
 
-		
 		try:
-			post = shipment.query.filter_by(Shipment_No=editid).first()
-			if field == 'Vehicle_No' :
-				post.Vehicle_No = value
-			elif field == 'Shipment_Type' :
-				post.Shipment_Type = value
-			elif field == 'Pilot_unique_ID' :
-				post.Pilot_unique_ID = value
-			elif field == 'Copilot_unique_ID' :
-				post.Copilot_unique_ID = value
-			elif field == 'Dispatcher_unique_ID' :
-				post.Dispatcher_unique_ID = value
-			elif field == 'Transporter' :
-				post.Transporter = value
-
 			db.session.commit()
-			msg = 'Record successfully Updated'
-		except :
-			msg = 'shipment number is not changable'
-			return jsonify(msg)
-	return jsonify(msg)
+			return redirect('/driver_list')
+		except:
+			return "There was a problem."
+	else:
+		return render_template('driver_list.html',row=row)
 
 
 
- # update in driver
-@app.route("/ajax_driver_update",methods=['POST'])
-def ajax_driver_update():
-	print("drive away")
-	if request.method == 'POST':
-		field = request.form['field']
-		value = request.form['value']
-		editid = request.form['id']
 
-		print(field)
-		print(value)
-		print(editid)
-		
+# update in shipment
+@app.route('/update_act/<Unique_ID>',methods=['POST','GET'])
+def update_act(Unique_ID):
+	row = activity.query.filter_by(Unique_ID=Unique_ID).first()
+	print(row)
+	if request.method=='POST':
+		row.BGV=request.form['BGV']
+		row.Acitve=request.form['Acitve']
+		row.Blacklisted=request.form['Blacklisted']
+		if row.BGV == 'Yes' and row.Blacklisted == 'No':
+			row.Avaialbility = 'Yes'
+		else:
+			row.Avaialbility = 'No'
+
 		try:
-			post = employee.query.filter_by(Unique_ID=editid).first()
-			if field == 'Date_of_Onboard' :
-				post.Date_of_Onboard = value
-			elif field == 'First_Name' :
-				post.First_Name = value
-			elif field == 'Middle_Name' :
-				post.Middle_Name = value
-			elif field == 'Last_Name' :
-				post.Last_Name = value
-			elif field == 'Transporter' :
-				post.Transporter = value
-				# tran = transport.query.filter_by(Transporter=value).first()
-				# if tran :
-				# 	post.Transporter = value
-				# 	new = employee.query.filter_by(Unique_ID=editid).first()
-				# 	new.Unique_ID = 
-			elif field == 'Role' :
-				post.Role = value
-			elif field == 'Address_1' :
-				post.Address_1 = value
-			elif field == 'Address_2' :
-				post.Address_2 = value
-			elif field == 'City' :
-				post.City = value
-			elif field == 'State' :
-				post.State = value
-			elif field == 'Zip_Code' :
-				post.Zip_Code = value
-			elif field == 'Mobile_No' :
-				post.Mobile_No = value
-			elif field == 'Emergency_Person' :
-				post.Emergency_Person = value
-			elif field == 'Emergency_Contact_No' :
-				post.Emergency_Contact_No = value
-			elif field == 'Spouse_Name' :
-				post.Spouse_Name = value
-			elif field == 'No_of_Children' :
-				post.No_of_Children = value
-			elif field == 'Driving_License_Number' :
-				post.Driving_License_Number = value
-			elif field == 'Driving_License_Type' :
-				post.Driving_License_Type = value
-			elif field == 'Drive_License_Validity' :
-				post.Drive_License_Validity = value
-			elif field == 'Vaccination_Name' :
-				post.Vaccination_Name = value
-			elif field == 'Dose1_Date' :
-				post.Dose1_Date = value
-			elif field == 'Dose2_Date' :
-				post.Dose2_Date = value
-			elif field == 'Booster_Dose_Date' :
-				post.Booster_Dose_Date = value
-
 			db.session.commit()
-			success = 1
-			return jsonify(success)
-		except Exception as e:
-			print(e)
-   
+			return redirect('/activity_list')
+		except:
+			return "There was a problem."
+	else:
+		return render_template('activity_list.html',row=row)
 
 
-@app.route("/ajax_activity_update",methods=["POST","GET"])
-def ajax_activity_update():
-    try:
-        if request.method == 'POST':
-            field = request.form['field'] 
-            value = request.form['value']
-            editid = request.form['id']
-            
-            print(field)
-            print(value)
-            print(editid)
-            try:
-            	post = activity.query.filter_by(Unique_ID=editid).first()
-            	if field == 'BGV' :
-            		post.BGV = value
-            	elif field == 'Active' :
-            		post.Active = value
-            	elif field == 'Blacklisted' :
-            		post.Blacklisted = value
 
-            	if post.BGV == 'Yes' and post.Blacklisted == 'No':
-            		post.Avaialbility = 'Yes'
-            	else:
-            		post.Avaialbility = 'No'
-            except Exception as e:
-            	print(e)
-            	print("fool")
 
-            db.session.commit()
+# update in shipment
+@app.route('/update_ship/<Shipment_No>',methods=['POST','GET'])
+def update_ship(Shipment_No):
+	row = shipment.query.filter_by(Shipment_No=Shipment_No).first()
+	print(row)
+	if request.method=='POST':
+		# row.Shipment_No=request.form['Shipment_No']
+		row.Vehicle_No=request.form['Vehicle_No']
 
-            success = 1
-        return jsonify(success)
-    except Exception as e:
-        print(e)
+		try:
+			db.session.commit()
+			return redirect('/ship_list')
+		except:
+			return "There was a problem."
+	else:
+		return render_template('ship_list.html',row=row)
+
+
+
+
 
 
 
@@ -550,9 +535,13 @@ def driver_list():
 	except :
 		return redirect(url_for('login'))
 	emp = employee.query.all()
+	tran = transport.query.all()
+	print(tran)
 	if request.method == 'GET':
-		return render_template("driver_list.html", employee=emp)
+		return render_template("driver_list.html", employee=emp, transport = tran)
 	return render_template("driver_list.html")	
+
+
 
 
 # activity list
@@ -567,11 +556,10 @@ def activity_list():
 
 	for u in act :
 		if u.On_Shipment == 'No' :
-			ship_date = datetime.strptime(u.Last_shipment_date,'%m/%d/%Y').date()
-			delta = datetime.now() - ship_date
+			# ship_date = datetime.strptime(u.Last_shipment_date,'%m/%d/%Y').date()
+			delta = datetime.now() - u.Last_shipment_date
 			u.Last_shipment_day = delta.days
-
-
+			db.session.commit()
 
 	if request.method == 'GET':
 		return render_template("activity_list.html", activity=act)
@@ -591,14 +579,9 @@ def download_Driver_report():
 		return redirect(url_for('login'))
 	if request.method == 'GET':
 		driver = employee.query.all()
-		act = activity.query.all()
-
-
-		print()
 		output = io.BytesIO()
 		WORKBOOK = xlwt.Workbook()
 		sh = WORKBOOK.add_sheet('report')
-
 
 		sh.write( 0,0,'Unique_ID')
 		sh.write( 0,1,'Date_of_Onboard')
@@ -645,9 +628,7 @@ def download_Driver_report():
 
 
 		idx = 0
-		print("olaa")
-		# print(type(driver[1]))
-		print(act)
+		
 		for row in driver:
 			print(row)
 			sh.write(idx+1,0, str(row.Unique_ID))
@@ -724,25 +705,39 @@ def download_Shipment_report():
 		sh.write( 0,0,'Shipment_No')
 		sh.write( 0,1,'Vehicle_No')
 		sh.write( 0,2,'Shipment_Type')
-		sh.write( 0,3,'Pilot_unique_ID')
-		sh.write( 0,4,'Copilot_unique_ID')
-		sh.write( 0,5,'Dispatcher_unique_ID')
-		sh.write( 0,6,'Transporter')
-		sh.write( 0,7,'Add_Time')
-		sh.write( 0,8,'End_Time')
+		sh.write( 0,3,'Pilot1_Name')
+		sh.write( 0,4,'Pilot1_unique_ID')
+		sh.write( 0,5,'Pilot2_Name')
+		sh.write( 0,6,'Pilot2_unique_ID')
+		sh.write( 0,7,'Dispatcher_Name')
+		sh.write( 0,8,'Dispatcher_unique_ID')
+		sh.write( 0,9,'Transporter')
+		sh.write( 0,10,'Add_Time')
+		sh.write( 0,11,'End_Time')
 
 		idx = 0
 		for row in ships:
 			print(row)
+			
 			sh.write(idx+1,0,str(row.Shipment_No))
 			sh.write(idx+1,1,str(row.Vehicle_No))
 			sh.write(idx+1,2,str(row.Shipment_Type))
-			sh.write(idx+1,3,str(row.Pilot_unique_ID))
-			sh.write(idx+1,4,str(row.Copilot_unique_ID))
-			sh.write(idx+1,5,str(row.Dispatcher_unique_ID))
-			sh.write(idx+1,6,str(row.Transporter))
-			sh.write(idx+1,7,str(row.Add_Time))
-			sh.write(idx+1,8,str(row.End_Time))
+
+			p1 = employee.query.filter_by(Unique_ID = row.Pilot_unique_ID).first()
+			sh.write(idx+1,3,str(p1.First_Name+' '+ p1.Middle_Name +' '+p1.Last_Name))
+			sh.write(idx+1,4,str(row.Pilot_unique_ID))
+			if row.Copilot_unique_ID != 'No' :
+				p2 = employee.query.filter_by(Unique_ID = row.Copilot_unique_ID).first()
+				sh.write(idx+1,5,str(p2.First_Name+' '+ p2.Middle_Name +' '+p2.Last_Name))
+			else :
+				sh.write(idx+1,5,str('No'))
+			sh.write(idx+1,6,str(row.Copilot_unique_ID))
+			d1 = employee.query.filter_by(Unique_ID = row.Dispatcher_unique_ID).first()
+			sh.write(idx+1,7,str(d1.First_Name+' '+ d1.Middle_Name +' '+d1.Last_Name))
+			sh.write(idx+1,8,str(row.Dispatcher_unique_ID))
+			sh.write(idx+1,9,str(row.Transporter))
+			sh.write(idx+1,10,str(row.Add_Time))
+			sh.write(idx+1,11,str(row.End_Time))
 			idx += 1
 
 		WORKBOOK.save(output)
@@ -770,6 +765,7 @@ class activity(db.Model):
 	print("hello")
 	Unique_ID   = db.Column(db.String(80), primary_key=True, nullable=False)
 	Role = db.Column(db.String(10), unique=False, nullable=True)
+	Transporter = db.Column(db.String(10), unique=False, nullable=True)
 	BGV = db.Column(db.String(10), unique=False, nullable=True)
 	Active = db.Column(db.String(10), unique=False, nullable=True)
 	Avaialbility = db.Column(db.String(10), unique=False, nullable=True)

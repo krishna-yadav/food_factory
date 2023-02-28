@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% block head %} 
+           
+        <div class="container-fluid px-1 py-40 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-5 col-lg-8 col-md-9 col-9 text-center">
+                    <br>
+                    <div class="card">
+                    
+                    <form class="form-card"  action = "/ship" method = "POST">
+                    <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-12 flex-column d-flex" id="Transporter" name="Transporter" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10%" required>   
+                                        <option value=""> </option>
+                                        {% for tran in Transport%}
+                                        <option value="{{tran.Transporter}}"> {{tran.Transporter}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+            
+                    </div>
+                    <br>
+                    <div class="row justify-content-center text-left">
+
+                        <div class="form-group col-sm-10 flex-column d-flex"> <button type="seach" id="search" class="btn-primary"><i class="fa fa-search" >  Search</i></button> </div>
+            
+                    </div>
+                    
+                    </form> 
+
+                    </div>
+                    
+            </div>
+        </div>
+
+
+
+{% endblock %}

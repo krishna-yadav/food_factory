@@ -24,14 +24,19 @@ $(document).ready(function () {
     });
 });
 </script>
+<div class="pop">
+    {% with messages = get_flashed_messages() %}
+     {% if messages %}
+       {% for message in messages %}
+       <div class="alert alert-success" style="text-align:center" role="alert">
+        <span>{{message}}</span>
+      </div>
+        {% endfor %}
+     {% endif %}
+    {% endwith %}
+</div>
 
-{% with messages = get_flashed_messages() %}  
-         {% if messages %}  
-               {% for message in messages %}  
-                    <p>{{ message }}</p>  
-               {% endfor %}  
-         {% endif %}  
-      {% endwith %} 
+
 
 <div class="container-fluid px-1 py-40 mx-auto">
             <div class="row d-flex justify-content-center">
@@ -76,7 +81,17 @@ $(document).ready(function () {
                                 <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Address_2<span class="text-danger"> *</span></label> <input type="text" id="Address_2" name="Address_2" placeholder="" onblur="valid(7)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">City<span class="text-danger"> *</span></label> <input type="text" id="City" name="City" placeholder="" onblur="valid(8)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">City<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="City" name="City" placeholder="City" onblur="valid(23)" required> 
+                                        <option value=""> </option>
+                                        <option value="HGMV">Kheda</option>
+                                        <option value="HPMV">Taloja</option>
+                                        <option value="MCWG">Mumbai</option>
+                                    </select> </div>
+                            
+                            <!-- </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">City<span class="text-danger"> *</span></label> <input type="text" id="City" name="City" placeholder="" onblur="valid(8)" required> </div> -->
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">State/Region/Province<span class="text-danger"> *</span></label> <input type="text" id="State" name="State" placeholder="" onblur="valid(9)" required> </div>
                             </div>
                             <div class="row justify-content-between text-left">
@@ -89,7 +104,7 @@ $(document).ready(function () {
                             </div>
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Date of Birth<span class="text-danger"> *</span></label> <input type="date" id="DOB" name="DOB" placeholder="" onblur="valid(12)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Date of Birth<span class="text-danger"> *</span></label> <input type="date" id="DOB" name="DOB" placeholder="" onblur="valid(12)" max="2005-12-31" required> </div>
                             
                             </div>
 
@@ -179,7 +194,7 @@ $(document).ready(function () {
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">AADHAR Number<span class="text-danger"> *</span></label> <input type="text" id="Aadhar_Number" name="Aadhar_Number" placeholder="" onblur="valid(20)" required minlength="12" maxlength="12"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">AADHAR Number<span class="text-danger"> *</span></label> <input type="text" id="Aadhar_Number" name="Aadhar_Number" placeholder="" onblur="valid(20)"  minlength="12" maxlength="12" required> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
@@ -191,7 +206,7 @@ $(document).ready(function () {
                             </div>
                         <div class="text">
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Number<span class="text-danger"> *</span></label> <input type="text" id="Driving_License_Number" name="Driving_License_Number" placeholder="" onblur="valid(22)" minlength="10" maxlength="10"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">DL Number<span class="text-danger"> *</span></label> <input type="text" id="Driving_License_Number" name="Driving_License_Number" placeholder="" onblur="valid(22)" minlength="16" maxlength="16"> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
@@ -200,7 +215,7 @@ $(document).ready(function () {
                                         <option value=""> </option>
                                         <option value="HGMV">HGMV</option>
                                         <option value="HPMV">HPMV</option>
-                                        <option value="LMV-NT">LMV-NT</option>
+                                        <!-- <option value="LMV-NT">LMV-NT</option> -->
                                         <option value="MCWG">MCWG</option>
                                     </select> </div>
                             
@@ -217,8 +232,8 @@ $(document).ready(function () {
 
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Name of Vaccine <span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex" id="Vaccination_Name" name="Vaccination_Name" placeholder="Blood Group " onblur="valid(26)" style="padding-top: 10px" required> 
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Name of Vaccine </label> 
+                                    <select class="form-group col-sm-8 flex-column d-flex" id="Vaccination_Name" name="Vaccination_Name" placeholder="Blood Group " onblur="valid(26)" style="padding-top: 10px"> 
                                         <option value=""> </option>
                                         <option value="Covaxin">Covaxin</option>
                                         <option value="Covishield">Covishield </option>
@@ -228,17 +243,17 @@ $(document).ready(function () {
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Dose 1 Date</label> <input type="date" id="Dose1_Date" name="Dose1_Date" placeholder="" > </div>
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Dose 2 Date</label> <input type="date" id="Dose2_Date" name="Dose2_Date" placeholder="" > </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Dose 1 Date</label> <input type="date" id="Dose1_Date" name="Dose1_Date" placeholder="" min="2020-01-01"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Dose 2 Date</label> <input type="date" id="Dose2_Date" name="Dose2_Date" placeholder="" min="2020-01-01"> </div>
                             </div>
                             
 
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Vaccination Certificate<span class="text-danger"> *</span></label> <input type="file" id="Vaccination_Certi_Attachment" name="Vaccination_Certi_Attachment" capture="Vaccination_Certi_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(27)" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Vaccination Certificate</label> <input type="file" id="Vaccination_Certi_Attachment" name="Vaccination_Certi_Attachment" capture="Vaccination_Certi_Attachment" accept="image/png, image/jpeg" placeholder="" onblur="valid(27)"> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Booster Dose Date</label> <input type="date" id="Booster_Dose_Date" name="Booster_Dose_Date" placeholder="" > </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Booster Dose Date</label> <input type="date" id="Booster_Dose_Date" name="Booster_Dose_Date" placeholder="" min="2020-01-01"> </div>
                             
                             </div>
                             <div class="row justify-content-between text-left">

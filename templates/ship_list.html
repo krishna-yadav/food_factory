@@ -7,7 +7,7 @@
           <div class="table-flow">
             <div class="table-title">
                 <div class="row ">
-                    <div class="col-sm-8"><h2>Employee <b>Details</b></h2></div>
+                    <div class="col-sm-8"><h2>Shipment <b>Details</b></h2></div>
                     <div class="col-sm-4">
                         <!-- <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button> -->
                     </div>
@@ -17,6 +17,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>Action</th>
                         <th>Shipment_No</th>
                         <th>Vehicle_No</th>
                         <th>Shipment_Type</th>
@@ -29,34 +30,117 @@
                 <tbody>
                     {% for row in shipment %}
                     <tr>
+                        <td>
+                                <a href="/update_ship/{{row.Shipment_No}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                                    data-target="#modaledit{{row.Shipment_No}}">Edit</a>
+                                
+                            </td>
                         <td><label type="text" id="Shipment_No" >{{row.Shipment_No}}</label></td>
                         <!-- <td><label type="text" id="Vehicle_No" >{{row.Vehicle_No}}</label></td> -->
                         <td>
                             <div class='edit' > {{row.Vehicle_No}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Vehicle_No}}' id='Vehicle_No.{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Vehicle_No}}' id='Vehicle_No.{{row.Shipment_No}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Shipment_Type}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Shipment_Type}}' id='Shipment_Type.{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Shipment_Type}}' id='Shipment_Type.{{row.Shipment_No}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Pilot_unique_ID}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Pilot_unique_ID}}' id='Pilot_unique_ID.{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Pilot_unique_ID}}' id='Pilot_unique_ID.{{row.Shipment_No}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Copilot_unique_ID}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Copilot_unique_ID}}' id='Copilot_unique_ID.{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Copilot_unique_ID}}' id='Copilot_unique_ID.{{row.Shipment_No}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Dispatcher_unique_ID}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Dispatcher_unique_ID}}' id='Dispatcher_unique_ID.{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Dispatcher_unique_ID}}' id='Dispatcher_unique_ID.{{row.Shipment_No}}' >
                         </td>
                         <td>
                             <div class='edit' > {{row.Transporter}}</div> 
-                            <input type='text' class='txtedit' value='{{row.Transporter}}' id='Transporter.{{row.Unique_ID}}' >
+                            <input type='text' class='txtedit' value='{{row.Transporter}}' id='Transporter.{{row.Shipment_No}}' >
                         </td>
                         
                     </tr>
+
+
+                    <div id="modaledit{{row.Shipment_No}}" class="modal fade" style="margin-top: 10px;" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Update Information</h4>
+                                    </div>
+                                    <!-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        </div> -->
+                                    <div class="modal-body change">
+                                        <form action="/update_ship/{{row.Shipment_No}}" method="POST">
+                                            <!-- <div class="form-group">
+                                                <label>Shipment No:</label>
+                                                <input type="hidden" name="id" value="{{row.Shipment_No}}">
+                                                <input type="text" class="form-control" name="name"
+                                                    id="Shipment_No.{{row.Shipment_No}}" value="{{row.Shipment_No}}">
+                                                </div> -->
+                                            <div class="form-group">
+                                                <label>Vehicle No:</label>
+                                                <input type="hidden" name="id" value="{{row.Shipment_No}}">
+                                                <input type="text" class="form-control" name="Vehicle_No"
+                                                    id="Vehicle_No.{{row.Shipment_No}}" value="{{row.Vehicle_No}}">
+                                                </div>
+                                            <!-- <div class="form-group">
+                                                <label>Shipment Type:</label>
+                                                <input type="hidden" name="id" value="{{row.Shipment_No}}">
+                                                <input type="text" class="form-control" name="lname"
+                                                    id="Shipment_Type.{{row.Shipment_No}}" value="{{row.Shipment_Type}}">
+                                                </div>
+                                            <div class="form-group">
+                                                <label>Pilot1 unique ID:</label>
+                                                <input type="hidden" name="id" value="{{row.Shipment_No}}">
+                                                <select class="form-group col-sm-8 flex-column d-flex" id="transp" name="transp" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10px" >   
+                                                    <option value="{{row.Pilot_unique_ID}}" >{{row.Pilot_unique_ID}} </option>
+                                                    {% for tran in transport%}
+                                                        <option value="{{tran.Pilot_unique_ID}}" > {{tran.Pilot_unique_ID}}</option>
+                                                    {% endfor %}
+                                                    </select>
+
+                                                </div>
+                                            <div class="form-group">
+                                                <label>Pilot2 unique ID:</label>
+                                                <input type="hidden" name="id" value="{{row.Shipment_No}}">
+                                                <select class="form-group col-sm-8 flex-column d-flex" id="Copilot_unique_ID" name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="valid(4)" style="padding-top: 10px">   
+                                                    <option value="{{row.Copilot_unique_ID}}">{{row.Copilot_unique_ID}} </option>
+                                                    {% for tran in transport%}
+                                                        <option value="{{tran.Copilot_unique_ID}}" > {{tran.Copilot_unique_ID}}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Dispatcher unique ID:</label>
+                                                <input type="hidden" name="id" value="{{row.Shipment_No}}">
+                                                <select class="form-group col-sm-8 flex-column d-flex" id="Dispatcher_unique_ID" name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="valid(4)" style="padding-top: 10px">   
+                                                    <option value="{{row.Dispatcher_unique_ID}}">{{row.Dispatcher_unique_ID}} </option>
+                                                    {% for tran in transport%}
+                                                        <option value="{{tran.Dispatcher_unique_ID}}" > {{tran.Dispatcher_unique_ID}}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                            </div>
+ -->
+                                    <div class="form-group">
+                                                <button class="btn btn-primary" value="Update Name"
+                                                    type="submit">Update</button>
+                                                </div>
+                                            
+                                        </form>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                     {% endfor %}    
                 </tbody>
             </table>
@@ -70,7 +154,7 @@
 {% endblock %}
 
 
-{% block footer %}
+<!-- {% block footer %} -->
 
-    <script type="text/javascript" src="{{url_for('static', filename= 'js/ship_list.js') }}" > </script>
-{% endblock %}
+    <!-- <script type="text/javascript" src="{{url_for('static', filename= 'js/ship_list.js') }}" > </script> -->
+<!-- {% endblock %} -->
