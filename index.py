@@ -106,7 +106,6 @@ def logout():
 	return render_template("login.html")
 
 
-
 @app.route("/dashboard")
 def dashboard():
 	try :
@@ -114,7 +113,62 @@ def dashboard():
 			pass
 	except :
 		return redirect(url_for('login'))
-	return render_template('dashboard.html')
+	Transport = transport.query.all()
+	# if request.method == 'POST':
+	# 	print("yoyooooyo")
+	# 	Start_Date = request.form['Start_Date']
+	# 	End_Date = request.form['End_Date']
+	# 	Transporter = request.form['Transporter']
+	# 	Shipment_Type = request.form['Shipment_Type']
+	# 	shipment = shipment.query.filter_by(Shipment_Type=Shipment_Type,Transporter=Transporter)
+	# 	return render_template('compliance.html', shipment=shipment , Start_Date=Start_Date,End_Date=Start_Date)
+		
+	return render_template('dashboard.html', Transport=Transport)
+	
+
+@app.route("/compliance", methods= ["GET","POST"])
+def compliance():
+	try :
+		if session['user'] in params['User'] :
+			pass
+	except :
+		return redirect(url_for('login'))
+	if request.method == 'POST':
+		print("yoyooooyo")
+		Start_Date = datetime.strptime(request.form['Start_Date'] +" 00:00:00", '%Y-%m-%d %H:%M:%S')
+		End_Date = datetime.strptime(request.form['End_Date'] +" 00:00:00", '%Y-%m-%d %H:%M:%S')
+		Transporter = request.form['Transporter']
+		Shipment_Type = request.form['Shipment_Type']
+		ship_com = shipment.query.filter_by(Shipment_Type=Shipment_Type,Transporter=Transporter)
+		s = {}
+		for i in ship_com:
+			if Start_Date <= i.Add_Time  <= End_Date:
+				diff = End_Date - i.Add_Time
+				time_diff = diff.days*24 + round(diff.seconds/3600,2)
+
+				if i.Pilot_unique_ID in s :
+					s[i.Pilot_unique_ID] += time_diff
+				else :
+					s[i.Pilot_unique_ID] = time_diff
+				if i.Copilot_unique_ID in s :
+					s[i.Copilot_unique_ID] += time_diff
+				elif i.Copilot_unique_ID != 'No' :
+					s[i.Copilot_unique_ID] = time_diff
+				if i.Dispatcher_unique_ID in s :
+					s[i.Dispatcher_unique_ID] += time_diff
+				else :
+					s[i.Dispatcher_unique_ID] = time_diff
+			print(s)
+
+# 2023-02-27 00:00:00
+
+		return render_template('compliance.html', shipment=s)
+	# ship_com = shipment.query.filter_by(Shipment_Type=Shipment_Type,Transporter=Transporter)
+	# print(ships)
+	# if request.method == 'GET':
+	# 	return render_template("compliance.html", shipment=ship_com)
+	return render_template("compliance.html")
+
 	
 
 @app.route("/ship", methods = ['GET','POST'])
@@ -138,8 +192,8 @@ def ship():
 
 
 # shipment form
-@app.route("/shipment", methods = ['GET','POST'])
-def shipment():
+@app.route("/shipment/<Transporter>", methods = ['GET','POST'])
+def shipment(Transporter):
 	try :
 		if session['user'] in params['User'] :
 			pass
@@ -205,7 +259,7 @@ def shipment():
 				db.session.commit()
 			flash("Shipping Successful")
 			return redirect(request.path,code=302) 
-	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher )
+	return render_template("shipment.html", Driver=Driver , Dispatcher=Dispatcher, Transporter =Transporter )
 
 
 SNo = None
@@ -820,4 +874,4 @@ class employee(db.Model):
 	Photo_Attachment = db.Column(db.String(80), primary_key=False, nullable=False)
 
 
-app.run(debug=True)
+app.run(debug=True,host="0.0.0.0", port="50000")

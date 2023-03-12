@@ -1,26 +1,52 @@
 {% extends "index.html" %}
 {% block head %} 
-
-     
            
         <div class="container-fluid px-1 py-40 mx-auto">
             <div class="row d-flex justify-content-center">
-                <div class="col-xl-7 col-lg-8 col-md-9 col-9 text-center">
-                <!-- <div class="col-xl-5 col-lg-6 col-md-7 col-9 text-center"> -->
-                    <!-- <h3>Domino's Venture</h3> -->
-                    
+                <div class="col-xl-5 col-lg-8 col-md-9 col-9 text-center">
+                    <br>
                     <div class="card">
-                        <br>
-                        <h5 class="text-center mb-4">WELCOME TO JUBILANT'S SERVICE</h5>
-                        <br><br>
-                        <a href="/driver" class="btn btn-primary">Register Driver</a>
-                        <br>
-                        <a href="/shipment" class="btn btn-secondary">Register Shipment</a>
-                        <br><br><br>
-                        
+                    
+                    <form class="form-card"  action = "/compliance" method = "POST">
+                    <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Start Date<span class="text-danger"> *</span></label> <input type="date" id="Start_Date" name="Start_Date" placeholder="" min="2020-01-01" required> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">End Date<span class="text-danger"> *</span></label> <input type="date" id="End_Date" name="End_Date" placeholder="" min="2020-01-01" required> </div>
                     </div>
-                    <br><br><br><br><br><br>
-                </div>
+                    
+                    <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">Transporter<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-12 flex-column d-flex" id="Transporter" name="Transporter" placeholder="Transporter" onblur="valid(4)" style="padding-top: 10%" required>   
+                                        <option value=""> </option>
+                                        {% for tran in Transport%}
+                                        <option value="{{tran.Transporter}}"> {{tran.Transporter}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+            
+                    </div>
+                    <br>
+                    <div class="row justify-content-center text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">Shipment type<span class="text-danger"> *</span></label> 
+                                    <select class="form-group col-sm-12 flex-column d-flex" id="Shipment_Type" name="Shipment_Type" placeholder="Shipment_Type" onblur="valid(4)" style="padding-top: 10%" required>   
+                                        <option value=""> </option>
+                                        <option value="Local">  Local</option>
+                                        <option value="Outstation">  Outstation</option>
+                                    </select>
+                                </div>
+            
+                    </div>
+                    
+                    <br>
+                    <div class="row justify-content-center text-left">
+
+                        <div class="form-group col-sm-10 flex-column d-flex"> <button type="seach" id="search" class="btn-primary"><i class="fa fa-search" >  Search</i></button> </div>
+            
+                    </div>
+                    
+                    </form> 
+
+                    </div>
+                    
             </div>
         </div>
 
