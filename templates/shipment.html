@@ -23,8 +23,8 @@ $(document).ready(function () {
 });
 
 
-// $("#r1").click(function(){
-//     $('.rd[value="op1"]').attr('disabled', 'disabled');       
+// $("#r2").click(function(){
+//     $(".Copilot_unique_ID").attr('disabled', 'disabled');       
 // });​
 </script>
 <div class="pop">
@@ -46,7 +46,7 @@ $(document).ready(function () {
                 
                     <div class="card">
                         <h5 class="text-center mb-4">Driver Tracking</h5>
-                        <form class="form-card"  action = "/shipment" method = "POST">
+                        <form class="form-card"  action = "/shipment/{{Transporter}}" method = "POST">
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Shipment number<span class="text-danger"> *</span></label> <input type="text" id="Shipment_No" name="Shipment_No" placeholder="" onblur="validate(1)" required> </div>
                             </div>
@@ -73,10 +73,10 @@ $(document).ready(function () {
                                     </select>
                                 </div>
                             </div>
-                        <div class="text ">
+                        <!-- <div class="text "> -->
                             <div class="row justify-content-center text-left">
-                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Pilot 2 Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="Copilot_unique_ID select2" id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;">
+                                <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Pilot 2 Unique ID</label> 
+                                    <select class="Copilot_unique_ID select1" id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;">
                                         <option value=""> </option>
                                         {% for row in Driver %}
                                         {% if row.Transporter|string() == Transporter|string()%}
@@ -87,10 +87,10 @@ $(document).ready(function () {
 
                                 </div>
                             </div>
-                        </div>
+                        <!-- </div> -->
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex" > <label class="form-control-label px-3">Dispatcher Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="Dispatcher_unique_ID select3" id="Dispatcher_unique_ID"  name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="validate(6)" style="padding-top: 10px; align-self: stretch;" required>
+                                    <select class="Dispatcher_unique_ID select1" id="Dispatcher_unique_ID"  name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="validate(6)" style="padding-top: 10px; align-self: stretch;" required>
                                         <option value=""> </option>
                                         {% for row in Dispatcher %}
                                         
@@ -123,7 +123,7 @@ $(document).ready(function () {
 
 {% block footer %}
 
-
+<!-- 
 <script>
 
     $('.Pilot_unique_ID').on('change', function() {
@@ -148,7 +148,7 @@ $(document).ready(function () {
 });
 
 
- </script>
+ </script> -->
 
 
 <script>
@@ -157,17 +157,7 @@ $(document).ready(function () {
       });
     </script>
 
-<script>
-      $(document).ready(function () {
-        $(".select2").chosen();
-      });
-    </script>
-
-<script>
-      $(document).ready(function () {
-        $(".select3").chosen();
-      });
-    </script>
+    
      {% endblock %}
 
 
