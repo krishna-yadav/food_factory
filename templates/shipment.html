@@ -1,4 +1,14 @@
 {% extends "index.html" %}
+
+{% block header %} 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" integrity="sha512-eSeh0V+8U3qoxFnK3KgBsM69hrMOGMBy3CNxq/T4BArsSQJfKVsKb5joMqIPrNMjRQSTl4xG8oJRpgU2o9I7HQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" integrity="sha512-0nkKORjFgcyxv3HbE4rzFUlENUMNqic/EzDIeYCgsKa/nwqr2B91Vu/tNAu4Q0cBuG4Xe/D1f/freEci/7GDRA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+{% endblock %}
+
+
+
 {% block head %} 
 
 <script>
@@ -11,6 +21,11 @@ $(document).ready(function () {
         $(".text").hide();
     });
 });
+
+
+// $("#r1").click(function(){
+//     $('.rd[value="op1"]').attr('disabled', 'disabled');       
+// });​
 </script>
 <div class="pop">
     {% with messages = get_flashed_messages() %}
@@ -31,7 +46,7 @@ $(document).ready(function () {
                 
                     <div class="card">
                         <h5 class="text-center mb-4">Driver Tracking</h5>
-                        <form class="form-card"  action = "/shipment" method = "POST">
+                        <form class="form-card"  action = "/shipment/{{Transporter}}" method = "POST">
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex"> <label class="form-control-label px-3">Shipment number<span class="text-danger"> *</span></label> <input type="text" id="Shipment_No" name="Shipment_No" placeholder="" onblur="validate(1)" required> </div>
                             </div>
@@ -48,7 +63,7 @@ $(document).ready(function () {
 
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Pilot 1 Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex Pilot_unique_ID" id="Pilot_unique_ID"  name="Pilot_unique_ID" placeholder="Pilot_unique_ID" onblur="validate(4)" style="padding-top: 10px; align-self: stretch;" required>
+                                    <select class="Pilot_unique_ID select1" id="Pilot_unique_ID"  name="Pilot_unique_ID" placeholder="Pilot_unique_ID" onblur="validate(4)" style="padding-top: 10px; align-self: stretch;" required>
                                         <option value=""> </option>
                                         {% for row in Driver %}
                                         {% if row.Transporter|string() == Transporter|string() %}
@@ -58,10 +73,10 @@ $(document).ready(function () {
                                     </select>
                                 </div>
                             </div>
-                        <div class="text">
+                        <div class="text ">
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex " > <label class="form-control-label px-3">Pilot 2 Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex Copilot_unique_ID" id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;">
+                                    <select class="Copilot_unique_ID select2" id="Copilot_unique_ID"  name="Copilot_unique_ID" placeholder="Copilot_unique_ID" onblur="validate(5)" style="padding-top: 10px; align-self: stretch;">
                                         <option value=""> </option>
                                         {% for row in Driver %}
                                         {% if row.Transporter|string() == Transporter|string()%}
@@ -69,12 +84,13 @@ $(document).ready(function () {
                                         {% endif %}
                                        {% endfor %}
                                     </select>
+
                                 </div>
                             </div>
                         </div>
                             <div class="row justify-content-center text-left">
                                 <div class="form-group col-sm-8 flex-column d-flex" > <label class="form-control-label px-3">Dispatcher Unique ID<span class="text-danger"> *</span></label> 
-                                    <select class="form-group col-sm-8 flex-column d-flex " id="Dispatcher_unique_ID"  name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="validate(6)" style="padding-top: 10px; align-self: stretch;" required>
+                                    <select class="Dispatcher_unique_ID select3" id="Dispatcher_unique_ID"  name="Dispatcher_unique_ID" placeholder="Dispatcher_unique_ID" onblur="validate(6)" style="padding-top: 10px; align-self: stretch;" required>
                                         <option value=""> </option>
                                         {% for row in Dispatcher %}
                                         
@@ -133,4 +149,25 @@ $(document).ready(function () {
 
 
  </script>
+
+
+<script>
+      $(document).ready(function () {
+        $(".select1").chosen();
+      });
+    </script>
+
+<script>
+      $(document).ready(function () {
+        $(".select2").chosen();
+      });
+    </script>
+
+<script>
+      $(document).ready(function () {
+        $(".select3").chosen();
+      });
+    </script>
      {% endblock %}
+
+
