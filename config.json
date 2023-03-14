@@ -1,9 +1,9 @@
 {
     "params": {
         "local_server": "True",
-        "local_uri" : "mysql+pymysql://root:@localhost/jubilant",
-        "prod_uri" : "mysql+pymysql://root:@localhost/jubilant",
-        "UPLOAD_FOLDER" : "D:\\Driver_details",
+        "local_uri" : "mysql+pymysql://root:@localhost/zubilant",
+        "prod_uri" : "mysql+pymysql://root:@localhost/zubilant",
+        "UPLOAD_FOLDER" : "C:\\Users\\admin\\OneDrive\\Documents\\KRISHNA\\Final\\food_factory\\static\\images",
         "secret_key" : "my-super-secret-key",
         "User" : "Admin",
         "PWD" : "admin"
