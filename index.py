@@ -106,6 +106,24 @@ def logout():
 	return render_template("login.html")
 
 
+
+@app.route("/chart")
+def chart():
+	# try :
+	# 	session.pop('user')
+	# except :
+	# 	return render_template("login.html")
+	t = []
+	c= []
+	Transport = transport.query.all()
+	for i in Transport :
+		t.append(i.Transporter)
+		c.append(activity.query.filter_by(Transporter = i.Transporter).count())
+	print(t,c)
+
+	return render_template("chart.html",transport= json.dumps(t) , count = json.dumps(c))
+
+
 @app.route("/dashboard")
 def dashboard():
 	try :
